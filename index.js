@@ -33,20 +33,20 @@ class WebStore {
    * Load gRPC Connection
    * @return {Object} Return request for get data
    */
-  // getService() {
-  //   var grpc = require('grpc');
-  //   var protoLoader = require('@grpc/proto-loader');
-  //   var packageDefinition = protoLoader.loadSync(
-  //       'proto/helloworld.proto',
-  //       {keepCase: true,
-  //        longs: String,
-  //        enums: String,
-  //        defaults: true,
-  //        oneofs: true
-  //       });
-  //   var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
-  //   return new hello_proto.Greeter(this.host, grpc.credentials.createInsecure());
-  // }
+  getService() {
+    var grpc = require('grpc');
+    var protoLoader = require('@grpc/proto-loader');
+    var packageDefinition = protoLoader.loadSync(
+        'proto/helloworld.proto',
+        {keepCase: true,
+         longs: String,
+         enums: String,
+         defaults: true,
+         oneofs: true
+        });
+    var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
+    return new hello_proto.Greeter(this.host, grpc.credentials.createInsecure());
+  }
 
   /**
    * Make login
