@@ -34,8 +34,11 @@ class WebStore {
    * @return {Object} Return request for get data
    */
   getService() {
+    console.log('Start');
+    console.log('Host: ', this.host);
     var grpc = require('grpc');
     var protoLoader = require('@grpc/proto-loader');
+    console.log('Package');
     var packageDefinition = protoLoader.loadSync(
         'proto/helloworld.proto',
         {keepCase: true,
@@ -44,7 +47,9 @@ class WebStore {
          defaults: true,
          oneofs: true
         });
+    console.log('After Package');
     var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
+    console.log('hello_proto ', hello_proto);
     return new hello_proto.Greeter(this.host, grpc.credentials.createInsecure());
   }
 
