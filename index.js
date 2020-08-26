@@ -16,7 +16,6 @@
 
 class WebStore {
 
-  var PROTO_PATH = __dirname + 'proto/helloworld.proto';
   /**
    * Constructor, No authentication required
    * @param {string} host
@@ -24,6 +23,7 @@ class WebStore {
    * @param {string} language
    */
   constructor({ host, version, language = 'en_US' }) {
+    console.log('Constructor');
     this.host = host;
     this.version = version;
     this.language = language;
@@ -33,20 +33,20 @@ class WebStore {
    * Load gRPC Connection
    * @return {Object} Return request for get data
    */
-  getService() {
-    var grpc = require('grpc');
-    var protoLoader = require('@grpc/proto-loader');
-    var packageDefinition = protoLoader.loadSync(
-        PROTO_PATH,
-        {keepCase: true,
-         longs: String,
-         enums: String,
-         defaults: true,
-         oneofs: true
-        });
-    var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
-    return new hello_proto.Greeter(this.host, grpc.credentials.createInsecure());
-  }
+  // getService() {
+  //   var grpc = require('grpc');
+  //   var protoLoader = require('@grpc/proto-loader');
+  //   var packageDefinition = protoLoader.loadSync(
+  //       'proto/helloworld.proto',
+  //       {keepCase: true,
+  //        longs: String,
+  //        enums: String,
+  //        defaults: true,
+  //        oneofs: true
+  //       });
+  //   var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
+  //   return new hello_proto.Greeter(this.host, grpc.credentials.createInsecure());
+  // }
 
   /**
    * Make login
@@ -54,10 +54,10 @@ class WebStore {
    * @param {string} userPass User Pass
    * @return {Session} Session assigned
    */
-  sayHello({ name }) {
-    this.getService().sayHello( { name: name }, function(err, response) {
-      console.log('Greeting:', response.message);
-    });
-  }
-
+  // sayHello({ name }) {
+  //   this.getService().sayHello( { name: name }, function(err, response) {
+  //     console.log('Greeting:', response.message);
+  //   });
+  // }
+}
 module.exports = WebStore;
