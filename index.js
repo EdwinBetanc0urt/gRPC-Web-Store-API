@@ -46,7 +46,7 @@ class WebStore {
     var request = new messages.HelloRequest();
     request.setName('Epale');
     this.connection.sayHello(request, function(err, response) {
-      console.log('Greeting:', response.getMessage());
+      console.log('Greeting:', response);
     });
   }
 }
