@@ -36,21 +36,15 @@ class WebStore {
   getService() {
     console.log('Start');
     console.log('Host: ', this.host);
-    var grpc = require('grpc');
-    var protoLoader = require('@grpc/proto-loader');
-    console.log('Package');
-    var packageDefinition = protoLoader.loadSync(
-        'helloworld.proto',
-        {keepCase: true,
-         longs: String,
-         enums: String,
-         defaults: true,
-         oneofs: true
-        });
-    console.log('After Package');
-    var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
-    console.log('hello_proto ', hello_proto);
-    return new hello_proto.Greeter(this.host, grpc.credentials.createInsecure());
+    var messages = require('./helloworld_pb');
+    var services = require('./helloworld_grpc_pb');
+    console.log('Package ', process.env);
+    var client = new services.GreeterClient(this.host, grpc.credentials.createInsecure());
+    var request = new messages.HelloRequest();
+    request.setName('Epale');
+    client.sayHello(request, function(err, response) {
+      console.log('Greeting:', response.getMessage());
+    });
   }
 
   /**

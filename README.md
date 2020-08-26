@@ -103,7 +103,11 @@ protoc --version
 After installed it just go to source code folder an run it:
 
 Run Access gRPC
-```
+```sh
+cd ../../protos
+yarn global add grpc-tools
+grpc_tools_node_protoc --js_out=import_style=commonjs,binary:src/grpc --grpc_out=src/grpc --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` proto/helloworld.proto
+
 protoc proto/access.proto \
 --js_out=import_style=commonjs:src/grpc \
 --grpc-web_out=import_style=commonjs,mode=grpcwebtext:src/grpc
