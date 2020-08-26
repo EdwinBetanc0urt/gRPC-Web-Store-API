@@ -23,28 +23,16 @@ class WebStore {
    * @param {string} language
    */
   constructor({ host, version, language = 'en_US' }) {
-    console.log('Constructor');
     this.host = host;
     this.version = version;
     this.language = language;
   }
 
-  /**
-   * Load gRPC Connection
-   * @return {Object} Return request for get data
-   */
-  getService() {
-    console.log('Start');
-    console.log('Host: ', this.host);
-    var messages = require('./helloworld_pb');
-    var services = require('./helloworld_grpc_pb');
-    console.log('Package ', process.env);
-    var client = new services.GreeterClient(this.host, grpc.credentials.createInsecure());
-    var request = new messages.HelloRequest();
-    request.setName('Epale');
-    client.sayHello(request, function(err, response) {
-      console.log('Greeting:', response.getMessage());
-    });
+  // Init connection
+  init() {
+    var grpc = require('grpc');
+    var services = require('./src/grpc/proto/helloworld_grpc_pb');
+    this.connection = new services.GreeterClient(this.host, grpc.credentials.createInsecure());
   }
 
   /**
@@ -53,10 +41,13 @@ class WebStore {
    * @param {string} userPass User Pass
    * @return {Session} Session assigned
    */
-  // sayHello({ name }) {
-  //   this.getService().sayHello( { name: name }, function(err, response) {
-  //     console.log('Greeting:', response.message);
-  //   });
-  // }
+  sayHello({ name }) {
+    var messages = require('./src/grpc/proto/helloworld_pb');
+    var request = new messages.HelloRequest();
+    request.setName('Epale');
+    this.connection.sayHello(request, function(err, response) {
+      console.log('Greeting:', response.getMessage());
+    });
+  }
 }
 module.exports = WebStore;
