@@ -40,7 +40,7 @@ class WebStore {
     var protoLoader = require('@grpc/proto-loader');
     console.log('Package');
     var packageDefinition = protoLoader.loadSync(
-        '/proto/helloworld.proto',
+        'helloworld.proto',
         {keepCase: true,
          longs: String,
          enums: String,
