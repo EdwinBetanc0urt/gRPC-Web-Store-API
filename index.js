@@ -22,32 +22,61 @@ class WebStore {
    * @param {string} version
    * @param {string} language
    */
-  constructor({ host, version, language = 'en_US' }) {
-    this.host = host;
-    this.version = version;
-    this.language = language;
+  constructor({
+    host,
+    version,
+    language = 'en_US'
+  }) {
+    this.host = host
+    this.version = version
+    this.language = language
   }
 
   // Init connection
-  init() {
-    var grpc = require('grpc');
-    var services = require('./src/grpc/proto/helloworld_grpc_pb');
-    this.connection = new services.GreeterClient(this.host, grpc.credentials.createInsecure());
-  }
+  // init() {
+  //   var grpc = require('grpc');
+  //   var services = require('./src/grpc/proto/web_store_grpc_pb');
+  //   this.connection = new services.GreeterClient(this.host, grpc.credentials.createInsecure());
+  // }
 
   /**
-   * Make login
-   * @param {string} userName User Name
-   * @param {string} userPass User Pass
-   * @return {Session} Session assigned
+   * Load gRPC Connection
+   * @return {Object} Return request for get data
    */
-  sayHello({ name }) {
-    var messages = require('./src/grpc/proto/helloworld_pb');
-    var request = new messages.HelloRequest();
-    request.setName('Epale');
-    this.connection.sayHello(request, function(err, response) {
-      console.log('Greeting:', response);
-    });
+  getAccessService() {
+    const grpc_promise = require('grpc-promise')
+    const { SecurityPromiseClient } = require('./src/grpc/proto/access_grpc_web_pb.js')
+    const requestService = new SecurityPromiseClient(this.host)
+    grpc_promise.promisifyAll(requestService)
+    return requestService
+  }
+
+  //  Get Admin token from ADempiere
+  getAdminToken({
+    user,
+    password
+  }) {
+    console.log(this.login({user, password}))
+  }
+
+  login({
+    user,
+    password,
+    roleUuid,
+    organizationUuid
+  }) {
+    const { LoginRequest } = require('./src/grpc/proto/access_pb.js')
+    const request = new LoginRequest()
+    request.setUsername(user)
+    request.setUserpass(password)
+    request.setRoleuuid(roleUuid)
+    request.setOrganizationuuid(organizationUuid)
+    request.setLanguage(this.language)
+    request.setClientversion(this.version)
+    return this.getAccessService().runLoginDefault(request)
+      .then(response => {
+        return response
+      })
   }
 }
 module.exports = WebStore;

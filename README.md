@@ -2,7 +2,7 @@
 [![npm version](https://img.shields.io/npm/v/@adempiere/grpc-web-store.svg)](https://www.npmjs.com/package/@adempiere/grpc-web-store)
 [![License](https://img.shields.io/npm/l/@adempiere/grpc-web-store.svg)](https://github.com/erpcya/adempiere-web-store/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/npm/dm/@adempiere/grpc-web-store.svg)](https://www.npmjs.com/package/@adempiere/grpc-web-store)
-[![Dependencies](https://img.shields.io/librariesio/github/erpcya/grpc-web-store.svg)](https://www.npmjs.com/package/@adempiere/grpc-web-store)
+[![Dependencies](https://img.shields.io/librariesio/github/erpcya/grpc-web-store.svg)](https://www.npmjs.com/package/@adempiere/grpc-web-store-api)
 
 ADempiere Web Store Client write in Javascript for gRPC service, use it for connect with
 [ADempiere-gRPC-Server](https://github.com/erpcya/adempiere-gRPC-Server).
@@ -15,23 +15,23 @@ ADempiere Web Store Client write in Javascript for gRPC service, use it for conn
 
 ``` bash
 # installing via NPM
-npm install @adempiere/grpc-web-store --save
+npm install @adempiere/grpc-web-store-api --save
 ```
 ``` bash
 # installing via Yarn
-yarn add @adempiere/grpc-web-store
+yarn add @adempiere/grpc-web-store-api
 ```
 
 ## A Example
 ### Declare Data
 ```javascript
-const Access = require('@adempiere/grpc-web-store');
+const Access = require('@adempiere/grpc-web-store-api');
 // URL, Version
 let access = new Access(GRPC_HOST, 'Version Epale');
 ```
 ### Declare Data with specific language
 ```javascript
-const Access = require('@adempiere/grpc-web-store');
+const Access = require('@adempiere/grpc-web-store-api');
 let access = new Access(GRPC_HOST, 'Version Epale');
 ```
 
@@ -106,11 +106,7 @@ Run Access gRPC
 ```sh
 cd ../../protos
 yarn global add grpc-tools
-grpc_tools_node_protoc --js_out=import_style=commonjs,binary:src/grpc --grpc_out=src/grpc --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` proto/helloworld.proto
-
-protoc proto/access.proto \
---js_out=import_style=commonjs:src/grpc \
---grpc-web_out=import_style=commonjs,mode=grpcwebtext:src/grpc
+grpc_tools_node_protoc --js_out=import_style=commonjs,binary:src/grpc --grpc_out=src/grpc --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` proto/access.proto proto/client.proto proto/web_store.proto
 ```
 
 Or run:
