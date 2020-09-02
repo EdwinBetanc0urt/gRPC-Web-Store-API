@@ -38,14 +38,14 @@ class WebStore {
   initAccessService() {
     var grpc = require('grpc');
     var services = require('./src/grpc/proto/access_grpc_pb');
-    this.access = new services.GreeterClient(this.accessHost, grpc.credentials.createInsecure());
+    this.access = new services.SecurityClient(this.accessHost, grpc.credentials.createInsecure());
   }
 
   // Init connection
   initStoreService() {
     var grpc = require('grpc');
     var services = require('./src/grpc/proto/web_store_grpc_pb');
-    this.store = new services.GreeterClient(this.storeHost, grpc.credentials.createInsecure());
+    this.store = new services.WebStoreClient(this.storeHost, grpc.credentials.createInsecure());
   }
 
   //  Get Access Service
