@@ -41,7 +41,7 @@ class WebStore {
   //  Init connection
   init() {
     const grpc_promise = require('grpc-promise')
-    const { SecurityPromiseClient } = require('./src/grpc/proto/access_grpc_web_pb.js')
+    const { SecurityPromiseClient } = require('./src/grpc/proto/access_grpc_pb.js')
     this.service = new SecurityPromiseClient(this.host)
     grpc_promise.promisifyAll(service)
   }
