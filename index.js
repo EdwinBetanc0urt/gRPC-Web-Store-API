@@ -23,40 +23,39 @@ class WebStore {
    * @param {string} language
    */
   constructor({
-    host,
+    accessHost,
+    storeHost,
     version,
     language = 'en_US'
   }) {
-    this.host = host
+    this.accessHost = accessHost
+    this.storeHost = storeHost
     this.version = version
     this.language = language
   }
 
   // Init connection
-  // init() {
-  //   var grpc = require('grpc');
-  //   var services = require('./src/grpc/proto/web_store_grpc_pb');
-  //   this.connection = new services.GreeterClient(this.host, grpc.credentials.createInsecure());
-  // }
-  //  Init connection
-  init() {
-    const grpc_promise = require('grpc-promise')
-    const { SecurityPromiseClient } = require('./src/grpc/proto/access_grpc_pb.js')
-    this.service = new SecurityPromiseClient(this.host)
-    grpc_promise.promisifyAll(service)
+  initAccessService() {
+    var grpc = require('grpc');
+    var services = require('./src/grpc/proto/access_grpc_web_pb');
+    this.access = new services.GreeterClient(this.accessHost, grpc.credentials.createInsecure());
   }
 
-  /**
-   * Load gRPC Connection
-   * @return {Object} Return request for get data
-   */
+  // Init connection
+  initStoreService() {
+    var grpc = require('grpc');
+    var services = require('./src/grpc/proto/web_store_grpc_pb');
+    this.store = new services.GreeterClient(this.storeHost, grpc.credentials.createInsecure());
+  }
+
+  //  Get Access Service
   getAccessService() {
-    return this.service
-    // const grpc_promise = require('grpc-promise')
-    // const { SecurityPromiseClient } = require('./src/grpc/proto/access_grpc_web_pb.js')
-    // const requestService = new SecurityPromiseClient(this.host)
-    // grpc_promise.promisifyAll(requestService)
-    // return requestService
+    return this.access
+  }
+
+  //  Get Store Service
+  getStoreService() {
+    return this.store
   }
 
   //  Get Admin token from ADempiere
@@ -81,10 +80,10 @@ class WebStore {
     request.setOrganizationuuid(organizationUuid)
     request.setLanguage(this.language)
     request.setClientversion(this.version)
-    return this.getAccessService().runLoginDefault(request)
-      .then(response => {
-        return response
-      })
+    return this.getAccessService().runLoginDefault(request, function(err, response) {
+      console.log(response)
+      return response
+    });
   }
 }
 module.exports = WebStore;
