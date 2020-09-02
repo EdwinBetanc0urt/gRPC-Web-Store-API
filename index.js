@@ -37,7 +37,7 @@ class WebStore {
   // Init connection
   initAccessService() {
     var grpc = require('grpc');
-    var services = require('./src/grpc/proto/access_grpc_web_pb');
+    var services = require('./src/grpc/proto/access_grpc_pb');
     this.access = new services.GreeterClient(this.accessHost, grpc.credentials.createInsecure());
   }
 
