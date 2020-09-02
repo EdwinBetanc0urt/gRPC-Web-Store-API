@@ -66,10 +66,10 @@ proto.data.ClientRequest.prototype.toObject = function(opt_includeInstance) {
  */
 proto.data.ClientRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    sessionuuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    sessionUuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     language: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    organizationuuid: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    warehouseuuid: jspb.Message.getFieldWithDefault(msg, 4, "")
+    organizationUuid: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    warehouseUuid: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -108,7 +108,7 @@ proto.data.ClientRequest.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setSessionuuid(value);
+      msg.setSessionUuid(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -116,11 +116,11 @@ proto.data.ClientRequest.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setOrganizationuuid(value);
+      msg.setOrganizationUuid(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setWarehouseuuid(value);
+      msg.setWarehouseUuid(value);
       break;
     default:
       reader.skipField();
@@ -151,7 +151,7 @@ proto.data.ClientRequest.prototype.serializeBinary = function() {
  */
 proto.data.ClientRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getSessionuuid();
+  f = message.getSessionUuid();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -165,14 +165,14 @@ proto.data.ClientRequest.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getOrganizationuuid();
+  f = message.getOrganizationUuid();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getWarehouseuuid();
+  f = message.getWarehouseUuid();
   if (f.length > 0) {
     writer.writeString(
       4,
@@ -183,10 +183,10 @@ proto.data.ClientRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string sessionUuid = 1;
+ * optional string session_uuid = 1;
  * @return {string}
  */
-proto.data.ClientRequest.prototype.getSessionuuid = function() {
+proto.data.ClientRequest.prototype.getSessionUuid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -195,7 +195,7 @@ proto.data.ClientRequest.prototype.getSessionuuid = function() {
  * @param {string} value
  * @return {!proto.data.ClientRequest} returns this
  */
-proto.data.ClientRequest.prototype.setSessionuuid = function(value) {
+proto.data.ClientRequest.prototype.setSessionUuid = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -219,10 +219,10 @@ proto.data.ClientRequest.prototype.setLanguage = function(value) {
 
 
 /**
- * optional string organizationUuid = 3;
+ * optional string organization_uuid = 3;
  * @return {string}
  */
-proto.data.ClientRequest.prototype.getOrganizationuuid = function() {
+proto.data.ClientRequest.prototype.getOrganizationUuid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -231,16 +231,16 @@ proto.data.ClientRequest.prototype.getOrganizationuuid = function() {
  * @param {string} value
  * @return {!proto.data.ClientRequest} returns this
  */
-proto.data.ClientRequest.prototype.setOrganizationuuid = function(value) {
+proto.data.ClientRequest.prototype.setOrganizationUuid = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string warehouseUuid = 4;
+ * optional string warehouse_uuid = 4;
  * @return {string}
  */
-proto.data.ClientRequest.prototype.getWarehouseuuid = function() {
+proto.data.ClientRequest.prototype.getWarehouseUuid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -249,7 +249,7 @@ proto.data.ClientRequest.prototype.getWarehouseuuid = function() {
  * @param {string} value
  * @return {!proto.data.ClientRequest} returns this
  */
-proto.data.ClientRequest.prototype.setWarehouseuuid = function(value) {
+proto.data.ClientRequest.prototype.setWarehouseUuid = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 

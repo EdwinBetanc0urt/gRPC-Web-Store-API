@@ -32,8 +32,29 @@ class WebStore {
     this.storeHost = storeHost
     this.version = version
     this.language = language
+    this.user = user
+    this.password = password
     this.initAccessService()
     this.initStoreService()
+  }
+
+  //  Init service
+  initService() {
+    return this.login({
+      user: this.user,
+      password: this.password
+    }, function(err, response) {
+      if(response) {
+        const { ClientRequest } = require('./src/grpc/proto/client_pb.js')
+        const client = new ClientRequest()
+        client.setSessionUuid(response.getUuid())
+        client.setLanguage(this.language)
+        this.clientContext = client
+        console.log(response.getUuid())
+      } else if(err) {
+        console.log(err)
+      }
+    })
   }
 
   // Init connection
@@ -52,7 +73,7 @@ class WebStore {
 
   //  Get Access Service
   getAccessService() {
-    return this.access
+    return this.clientRequest
   }
 
   //  Get Store Service
@@ -60,17 +81,12 @@ class WebStore {
     return this.store
   }
 
-  //  Get Admin token from ADempiere
-  getAdminToken({
-    user,
-    password
-  }, callback) {
-    return this.login({
-      user,
-      password
-    }, callback)
+  //  Get Client Context
+  getClientContext() {
+    return this.clientContext
   }
 
+  //  Login with a user
   login({
     user,
     password,
@@ -88,15 +104,5 @@ class WebStore {
     return this.getAccessService().runLoginDefault(request, callback)
   }
 
-  //  Set values to callback
-  setCallback(callback, error, response) {
-    if(callback) {
-      if(response) {
-        callback.onOk(response)
-      } else if(error) {
-        callback.onError(error)
-      }
-    }
-  }
 }
 module.exports = WebStore;
