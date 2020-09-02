@@ -62,11 +62,11 @@ class WebStore {
   getAdminToken({
     user,
     password
-  }) {
+  }, callback) {
     return this.login({
       user,
       password
-    })
+    }, callback)
   }
 
   login({
@@ -74,7 +74,7 @@ class WebStore {
     password,
     roleUuid,
     organizationUuid
-  }) {
+  }, callback) {
     const { LoginRequest } = require('./src/grpc/proto/access_pb.js')
     const request = new LoginRequest()
     request.setUsername(user)
@@ -83,9 +83,18 @@ class WebStore {
     request.setOrganizationuuid(organizationUuid)
     request.setLanguage(this.language)
     request.setClientversion(this.version)
-    return this.getAccessService().runLoginDefault(request, function(err, response) {
-      return response
-    });
+    return this.getAccessService().runLoginDefault(request, callback)
+  }
+
+  //  Set values to callback
+  setCallback(callback, error, response) {
+    if(callback) {
+      if(response) {
+        callback.onOk(response)
+      } else if(error) {
+        callback.onError(error)
+      }
+    }
   }
 }
 module.exports = WebStore;
