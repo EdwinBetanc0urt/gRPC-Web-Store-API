@@ -83,13 +83,9 @@ class WebStore {
     request.setOrganizationuuid(organizationUuid)
     request.setLanguage(this.language)
     request.setClientversion(this.version)
-    return this.getAccessService().runLoginDefault(request)
-      .then(response => {
-          resolve(response)
-      })
-      .catch(error => {
-        console.warn(error)
-      })
+    return this.getAccessService().runLoginDefault(request, function(err, response) {
+      return response
+    });
   }
 }
 module.exports = WebStore;
