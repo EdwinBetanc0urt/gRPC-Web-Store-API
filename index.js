@@ -80,6 +80,7 @@ class WebStore {
     request.setOrganizationuuid(organizationUuid)
     request.setLanguage(this.language)
     request.setClientversion(this.version)
+    console.log('Request: ', request)
     return this.getAccessService().runLoginDefault(request, function(err, response) {
       console.log('Epale ', response)
       return response
