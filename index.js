@@ -67,7 +67,7 @@ class WebStore {
       user,
       password
     })
-    return accessGranted.getMessage().getUuid()
+    return accessGranted
   }
 
   login({
