@@ -32,6 +32,8 @@ class WebStore {
     this.storeHost = storeHost
     this.version = version
     this.language = language
+    this.initAccessService()
+    this.initStoreService()
   }
 
   // Init connection
