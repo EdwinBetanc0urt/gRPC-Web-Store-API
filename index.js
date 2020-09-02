@@ -63,7 +63,7 @@ class WebStore {
     user,
     password
   }) {
-    console.log(this.login({user, password}))
+    console.log(this.login({user: user, password: password}))
   }
 
   login({
@@ -80,7 +80,10 @@ class WebStore {
     request.setOrganizationuuid(organizationUuid)
     request.setLanguage(this.language)
     request.setClientversion(this.version)
+    console.log('User: ', user)
+    console.log('Password: ', password)
     console.log('Request: ', request)
+
     return this.getAccessService().runLoginDefault(request, function(err, response) {
       console.log('Epale ', response)
       return response
