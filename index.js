@@ -38,17 +38,25 @@ class WebStore {
   //   var services = require('./src/grpc/proto/web_store_grpc_pb');
   //   this.connection = new services.GreeterClient(this.host, grpc.credentials.createInsecure());
   // }
+  //  Init connection
+  init() {
+    const grpc_promise = require('grpc-promise')
+    const { SecurityPromiseClient } = require('./src/grpc/proto/access_grpc_web_pb.js')
+    this.service = new SecurityPromiseClient(this.host)
+    grpc_promise.promisifyAll(service)
+  }
 
   /**
    * Load gRPC Connection
    * @return {Object} Return request for get data
    */
   getAccessService() {
-    const grpc_promise = require('grpc-promise')
-    const { SecurityPromiseClient } = require('./src/grpc/proto/access_grpc_web_pb.js')
-    const requestService = new SecurityPromiseClient(this.host)
-    grpc_promise.promisifyAll(requestService)
-    return requestService
+    return this.service
+    // const grpc_promise = require('grpc-promise')
+    // const { SecurityPromiseClient } = require('./src/grpc/proto/access_grpc_web_pb.js')
+    // const requestService = new SecurityPromiseClient(this.host)
+    // grpc_promise.promisifyAll(requestService)
+    // return requestService
   }
 
   //  Get Admin token from ADempiere
