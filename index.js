@@ -81,7 +81,7 @@ class WebStore {
     request.setLanguage(this.language)
     request.setClientversion(this.version)
     return this.getAccessService().runLoginDefault(request, function(err, response) {
-      console.log(response)
+      console.log('Epale ', response)
       return response
     });
   }
