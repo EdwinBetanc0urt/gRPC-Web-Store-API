@@ -27,6 +27,10 @@ package data;
 service WebStore {
 	//	Create Customer: POST /api/user/create: https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-create
 	rpc CreateCustomer(CreateCustomerRequest) returns (Customer) {}
+  //  Reset Password from Store: POST /api/user/reset-password
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {}
+  //  Change Password: POST /api/user/change-password
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {}
 }
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-create
@@ -79,4 +83,40 @@ message City {
 message Region {
 	int32 id = 1;
 	string name = 2;
+}
+
+// Request a Password Reset
+message ResetPasswordRequest {
+  ClientRequest clientRequest = 1;
+	string user_name = 2;
+	string email = 3;
+}
+
+// Reset Password Response
+message ResetPasswordResponse {
+	enum ResponseType {
+		OK = 0;
+		USER_NOT_FOUND = 1;
+		TOKEN_NOT_FOUND = 2;
+		ERROR = 3;
+	}
+	ResponseType response_type = 1;
+}
+
+// Change a Password from User Token
+message ChangePasswordRequest {
+  ClientRequest clientRequest = 1;
+	string current_password = 2;
+	string new_password = 3;
+}
+
+// Change Password Response
+message ChangePasswordResponse {
+	enum ResponseType {
+		OK = 0;
+		USER_NOT_FOUND = 1;
+		TOKEN_NOT_FOUND = 2;
+		ERROR = 3;
+	}
+	ResponseType response_type = 1;
 }

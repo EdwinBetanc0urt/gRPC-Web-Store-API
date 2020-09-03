@@ -22,25 +22,28 @@ class WebStore {
    * @param {string} version
    * @param {string} language
    */
-  constructor({
-    accessHost,
-    storeHost,
-    version,
-    language = 'en_US'
-  }) {
-    this.accessHost = accessHost
-    this.storeHost = storeHost
-    this.version = version
-    this.language = language
-    this.user = user
-    this.password = password
+  constructor(config) {
+    if(config) {
+      const adempiereConfig = config.adempiere.api
+      this.accessHost = adempiereConfig.accessHost
+      this.storeHost = adempiereConfig.storeHost
+      this.version = adempiereConfig.version
+      this.language = adempiereConfig.language
+      this.user = adempiereConfig.user
+      this.password = adempiereConfig.password
+    }
     this.initAccessService()
     this.initStoreService()
   }
 
   //  Init service
   initService() {
-    return this.login({
+    if(this.clientContext) {
+      return
+    }
+    const current = this
+    const language = this.language
+    this.login({
       user: this.user,
       password: this.password
     }, function(err, response) {
@@ -48,13 +51,22 @@ class WebStore {
         const { ClientRequest } = require('./src/grpc/proto/client_pb.js')
         const client = new ClientRequest()
         client.setSessionUuid(response.getUuid())
-        client.setLanguage(this.language)
-        this.clientContext = client
-        console.log(response.getUuid())
+        client.setLanguage(language)
+        current.setClientContext(client)
+        console.log('ADempiere Client Started')
       } else if(err) {
         console.log(err)
       }
     })
+  }
+
+  //  Create Client request from token
+  createClientRequest(token) {
+    const { ClientRequest } = require('./src/grpc/proto/client_pb.js')
+    const client = new ClientRequest()
+    client.setSessionUuid(token)
+    client.setLanguage(this.language)
+    return client
   }
 
   // Init connection
@@ -73,7 +85,7 @@ class WebStore {
 
   //  Get Access Service
   getAccessService() {
-    return this.clientRequest
+    return this.access
   }
 
   //  Get Store Service
@@ -84,6 +96,11 @@ class WebStore {
   //  Get Client Context
   getClientContext() {
     return this.clientContext
+  }
+
+  //  Set client context
+  setClientContext(context) {
+    this.clientContext = context
   }
 
   //  Login with a user
@@ -101,7 +118,38 @@ class WebStore {
     request.setOrganizationuuid(organizationUuid)
     request.setLanguage(this.language)
     request.setClientversion(this.version)
-    return this.getAccessService().runLoginDefault(request, callback)
+    this.getAccessService().runLoginDefault(request, callback)
+  }
+
+  //  Create a new user / customer
+  createCustomer({
+    email,
+    firstName,
+    lastName,
+    password
+  }, callback) {
+    const { CreateCustomerRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new CreateCustomerRequest()
+    request.setClientrequest(this.getClientContext())
+    request.setEmail(email)
+    request.setFirstName(firstName)
+    request.setLastName(lastName)
+    request.setPassword(password)
+    this.getStoreService().createCustomer(request, callback)
+  }
+
+  //  Change password from current session
+  changePassword({
+    token,
+    currentPassword,
+    newPassword
+  }, callback) {
+    const { ChangePasswordRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new ChangePasswordRequest()
+    request.setClientrequest(this.createClientRequest(token))
+    request.setCurrentPassword(currentPassword)
+    request.setNewPassword(newPassword)
+    this.getStoreService().changePassword(request, callback)
   }
 
 }
