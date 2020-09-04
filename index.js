@@ -152,5 +152,38 @@ class WebStore {
     this.getStoreService().changePassword(request, callback)
   }
 
+  // Sed a request for reset password
+  resetPassword({
+    user,
+    email
+  }, callback) {
+    const { ResetPasswordRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new ResetPasswordRequest()
+    request.setClientrequest(this.createClientRequest(token))
+    request.setsetUserName(user)
+    request.setEmail(email)
+    this.getStoreService().resetPassword(request, callback)
+  }
+
+  //  Get customer
+  getCustomer({
+    token
+  }, callback) {
+    const { GetCustomerRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new GetCustomerRequest()
+    request.setClientrequest(this.createClientRequest(token))
+    this.getStoreService().getCustomer(request, callback)
+  }
+
+  //  Get Stock from SKU
+  getStock({
+    sku
+  }, callback) {
+    const { GetStockRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new GetStockRequest()
+    request.setClientrequest(this.getClientContext())
+    request.setSku(sku)
+    this.getStoreService().getStock(request, callback)
+  }
 }
 module.exports = WebStore;

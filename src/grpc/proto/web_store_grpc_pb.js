@@ -64,6 +64,28 @@ function deserialize_data_Customer(buffer_arg) {
   return proto_web_store_pb.Customer.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_data_GetCustomerRequest(arg) {
+  if (!(arg instanceof proto_web_store_pb.GetCustomerRequest)) {
+    throw new Error('Expected argument of type data.GetCustomerRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_data_GetCustomerRequest(buffer_arg) {
+  return proto_web_store_pb.GetCustomerRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_data_GetStockRequest(arg) {
+  if (!(arg instanceof proto_web_store_pb.GetStockRequest)) {
+    throw new Error('Expected argument of type data.GetStockRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_data_GetStockRequest(buffer_arg) {
+  return proto_web_store_pb.GetStockRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_data_ResetPasswordRequest(arg) {
   if (!(arg instanceof proto_web_store_pb.ResetPasswordRequest)) {
     throw new Error('Expected argument of type data.ResetPasswordRequest');
@@ -86,10 +108,21 @@ function deserialize_data_ResetPasswordResponse(buffer_arg) {
   return proto_web_store_pb.ResetPasswordResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_data_Stock(arg) {
+  if (!(arg instanceof proto_web_store_pb.Stock)) {
+    throw new Error('Expected argument of type data.Stock');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_data_Stock(buffer_arg) {
+  return proto_web_store_pb.Stock.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 // 	Web Store Service used for ADempiere integration with vue store front api
 var WebStoreService = exports.WebStoreService = {
-  // 	Create Customer: POST /api/user/create: https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-create
+  // 	Create Customer: POST /api/user/create
 createCustomer: {
     path: '/data.WebStore/CreateCustomer',
     requestStream: false,
@@ -124,6 +157,30 @@ changePassword: {
     requestDeserialize: deserialize_data_ChangePasswordRequest,
     responseSerialize: serialize_data_ChangePasswordResponse,
     responseDeserialize: deserialize_data_ChangePasswordResponse,
+  },
+  //  Get Customer: GET /api/user/me
+getCustomer: {
+    path: '/data.WebStore/GetCustomer',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_web_store_pb.GetCustomerRequest,
+    responseType: proto_web_store_pb.Customer,
+    requestSerialize: serialize_data_GetCustomerRequest,
+    requestDeserialize: deserialize_data_GetCustomerRequest,
+    responseSerialize: serialize_data_Customer,
+    responseDeserialize: deserialize_data_Customer,
+  },
+  //  Get Stock: GET /api/stock/check/sku
+getStock: {
+    path: '/data.WebStore/GetStock',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_web_store_pb.GetStockRequest,
+    responseType: proto_web_store_pb.Stock,
+    requestSerialize: serialize_data_GetStockRequest,
+    requestDeserialize: deserialize_data_GetStockRequest,
+    responseSerialize: serialize_data_Stock,
+    responseDeserialize: deserialize_data_Stock,
   },
 };
 

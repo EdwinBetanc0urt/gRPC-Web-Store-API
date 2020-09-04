@@ -25,12 +25,16 @@ package data;
 
 //	Web Store Service used for ADempiere integration with vue store front api
 service WebStore {
-	//	Create Customer: POST /api/user/create: https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-create
+	//	Create Customer: POST /api/user/create
 	rpc CreateCustomer(CreateCustomerRequest) returns (Customer) {}
-  //  Reset Password from Store: POST /api/user/reset-password
-  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {}
-  //  Change Password: POST /api/user/change-password
-  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {}
+	//  Reset Password from Store: POST /api/user/reset-password
+  	rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {}
+	//  Change Password: POST /api/user/change-password
+	rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {}
+	//  Get Customer: GET /api/user/me
+	rpc GetCustomer(GetCustomerRequest) returns (Customer) {}
+	//  Get Stock: GET /api/stock/check/sku
+	rpc GetStock(GetStockRequest) returns (Stock) {}
 }
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-create
@@ -40,6 +44,46 @@ message CreateCustomerRequest {
 	string first_name = 3;
 	string last_name = 4;
 	string password = 5;
+}
+
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#get-api-user-me
+message GetCustomerRequest {
+	ClientRequest clientRequest = 1;
+}
+
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#get-api-stock-check-sku
+message GetStockRequest {
+	ClientRequest clientRequest = 1;
+	string sku = 2;
+}
+
+//	Stock
+message Stock {
+	int32 product_id = 1;
+	int32 stock_id = 2;
+	double quantity = 3;
+	bool is_in_stock = 4;
+	bool is_decimal_quantity = 5;
+	bool is_show_default_notification_message = 6;
+	bool is_use_config_minimum_quantity = 7;
+  double minimum_quantity = 8;
+  bool is_use_config_minimum_sale_quantity = 9;
+  double minimum_sale_quantity = 10;
+  bool is_use_config_maximum_sale_quantity = 11;
+  double maximum_sale_quantity = 12;
+  bool is_use_config_backorders = 13;
+  double backorders = 14;
+  bool is_use_config_notify_stock_quantity = 15;
+  double notify_stock_quantity = 16;
+  bool is_use_config_quantity_increments = 17;
+  double quantity_increments = 18;
+  bool is_use_config_enable_quantity_increments = 19;
+  bool is_enable_quantity_increments = 20;
+  bool is_use_config_manage_stock = 21;
+  bool is_manage_stock = 22;
+  string low_stock_date = 23;
+  bool is_decimal_divided = 24;
+  double stock_status_changed_auto = 25;
 }
 
 //
@@ -85,7 +129,7 @@ message Region {
 	string name = 2;
 }
 
-// Request a Password Reset
+// https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-reset-password
 message ResetPasswordRequest {
   ClientRequest clientRequest = 1;
 	string user_name = 2;
@@ -103,7 +147,7 @@ message ResetPasswordResponse {
 	ResponseType response_type = 1;
 }
 
-// Change a Password from User Token
+// https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-change-password
 message ChangePasswordRequest {
   ClientRequest clientRequest = 1;
 	string current_password = 2;
