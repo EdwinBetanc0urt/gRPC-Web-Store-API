@@ -185,5 +185,38 @@ class WebStore {
     request.setSku(sku)
     this.getStoreService().getStock(request, callback)
   }
+
+  //  Get Stock from SKU
+  listStock({
+    sku
+  }, callback) {
+    const { ListStockRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new ListStockRequest()
+    request.setClientrequest(this.getClientContext())
+    request.setSku(sku)
+    this.getStoreService().listStock(request, callback)
+  }
+
+  //  List product attributes based on sku list
+  listProducts({
+    skus
+  }, callback) {
+    const { ListProductsRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new ListProductsRequest()
+    request.setClientrequest(this.getClientContext())
+    skus.forEach(sku => request.addSkus(sku))
+    this.getStoreService().listProducts(request, callback)
+  }
+
+  //  List render products attributes based on sku list
+  listRenderProducts({
+    skus
+  }, callback) {
+    const { ListRenderProductsRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new ListRenderProductsRequest()
+    request.setClientrequest(this.getClientContext())
+    skus.forEach(sku => request.addSkus(sku))
+    this.getStoreService().listRenderProducts(request, callback)
+  }
 }
 module.exports = WebStore;
