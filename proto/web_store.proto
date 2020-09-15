@@ -41,11 +41,36 @@ service WebStore {
 	rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {}
 	//  List Products: GET /api/product/render-list
 	rpc ListRenderProducts(ListRenderProductsRequest) returns (ListRenderProductsResponse) {}
+	//	Service for get a resource from resource uuid: GET /img
+	rpc GetResource(GetResourceRequest) returns (stream Resource) {}
 }
+
+// https://docs.storefrontapi.com/guide/default-modules/api.html#image-module
+message GetResourceRequest {
+	ClientRequest client_request = 1;
+	string resource_uuid = 2;
+	string resource_name = 3;
+	int64 width = 4;
+	int64 height = 5;
+	enum Operation {
+		RESIZE = 0;
+		CROP = 1;
+		FIX = 2;
+		IDENTIFY = 3;
+	}
+	//	Operation
+	Operation operation = 6;
+}
+
+// Resource Chunk
+message Resource {
+    bytes data = 1;
+}
+
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-create
 message CreateCustomerRequest {
-	ClientRequest clientRequest = 1;
+	ClientRequest client_request = 1;
 	string email = 2;
 	string first_name = 3;
 	string last_name = 4;
@@ -54,18 +79,18 @@ message CreateCustomerRequest {
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#get-api-user-me
 message GetCustomerRequest {
-	ClientRequest clientRequest = 1;
+	ClientRequest client_request = 1;
 }
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#get-api-stock-check-sku
 message GetStockRequest {
-	ClientRequest clientRequest = 1;
+	ClientRequest client_request = 1;
 	string sku = 2;
 }
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#get-api-stock-list
 message ListStocksRequest {
-	ClientRequest clientRequest = 1;
+	ClientRequest client_request = 1;
 	string sku = 2;
 	int32 page_size = 3;
 	string page_token = 4;
@@ -80,7 +105,7 @@ message ListStocksResponse {
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#api-product-list
 message ListProductsRequest {
-	ClientRequest clientRequest = 1;
+	ClientRequest client_request = 1;
 	repeated string skus = 2;
 	int32 page_size = 3;
 	string page_token = 4;
@@ -153,7 +178,7 @@ message Product {
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#api-product-list
 message ListRenderProductsRequest {
-	ClientRequest clientRequest = 1;
+	ClientRequest client_request = 1;
 	repeated string skus = 2;
 	int32 page_size = 3;
 	string page_token = 4;
@@ -312,7 +337,7 @@ message Region {
 
 // https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-reset-password
 message ResetPasswordRequest {
-  ClientRequest clientRequest = 1;
+  ClientRequest client_request = 1;
 	string user_name = 2;
 	string email = 3;
 }
@@ -330,7 +355,7 @@ message ResetPasswordResponse {
 
 // https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-change-password
 message ChangePasswordRequest {
-  ClientRequest clientRequest = 1;
+  ClientRequest client_request = 1;
 	string current_password = 2;
 	string new_password = 3;
 }

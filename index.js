@@ -130,7 +130,7 @@ class WebStore {
   }, callback) {
     const { CreateCustomerRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new CreateCustomerRequest()
-    request.setClientrequest(this.getClientContext())
+    request.setClientRequest(this.getClientContext())
     request.setEmail(email)
     request.setFirstName(firstName)
     request.setLastName(lastName)
@@ -146,7 +146,7 @@ class WebStore {
   }, callback) {
     const { ChangePasswordRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new ChangePasswordRequest()
-    request.setClientrequest(this.createClientRequest(token))
+    request.setClientRequest(this.createClientRequest(token))
     request.setCurrentPassword(currentPassword)
     request.setNewPassword(newPassword)
     this.getStoreService().changePassword(request, callback)
@@ -159,7 +159,7 @@ class WebStore {
   }, callback) {
     const { ResetPasswordRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new ResetPasswordRequest()
-    request.setClientrequest(this.createClientRequest(token))
+    request.setClientRequest(this.createClientRequest(token))
     request.setsetUserName(user)
     request.setEmail(email)
     this.getStoreService().resetPassword(request, callback)
@@ -171,7 +171,7 @@ class WebStore {
   }, callback) {
     const { GetCustomerRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new GetCustomerRequest()
-    request.setClientrequest(this.createClientRequest(token))
+    request.setClientRequest(this.createClientRequest(token))
     this.getStoreService().getCustomer(request, callback)
   }
 
@@ -181,7 +181,7 @@ class WebStore {
   }, callback) {
     const { GetStockRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new GetStockRequest()
-    request.setClientrequest(this.getClientContext())
+    request.setClientRequest(this.getClientContext())
     request.setSku(sku)
     this.getStoreService().getStock(request, callback)
   }
@@ -190,11 +190,11 @@ class WebStore {
   listStock({
     sku
   }, callback) {
-    const { ListStockRequest } = require('./src/grpc/proto/web_store_pb.js')
-    const request = new ListStockRequest()
-    request.setClientrequest(this.getClientContext())
+    const { ListStocksRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new ListStocksRequest()
+    request.setClientRequest(this.getClientContext())
     request.setSku(sku)
-    this.getStoreService().listStock(request, callback)
+    this.getStoreService().listStocks(request, callback)
   }
 
   //  List product attributes based on sku list
@@ -203,7 +203,7 @@ class WebStore {
   }, callback) {
     const { ListProductsRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new ListProductsRequest()
-    request.setClientrequest(this.getClientContext())
+    request.setClientRequest(this.getClientContext())
     skus.forEach(sku => request.addSkus(sku))
     this.getStoreService().listProducts(request, callback)
   }
@@ -214,9 +214,49 @@ class WebStore {
   }, callback) {
     const { ListRenderProductsRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new ListRenderProductsRequest()
-    request.setClientrequest(this.getClientContext())
+    request.setClientRequest(this.getClientContext())
     skus.forEach(sku => request.addSkus(sku))
     this.getStoreService().listRenderProducts(request, callback)
+  }
+
+  //  Get Resource Image from name
+  getImage({
+    imageName
+  }, callback) {
+    const { GetResourceRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new GetResourceRequest()
+    request.setClientRequest(this.getClientContext())
+    request.setResourceName(imageName)
+    const stream = this.getStoreService().getResource(request)//, callback)
+    let result = new Uint8Array()
+    stream.on('data', (response) => {
+      result = this.mergeByteArray(result, response.getData())
+    })
+    stream.on('status', (status) => {
+      if (status && status.code === 13) {
+        callback(status, undefined)
+      }
+    })
+    stream.on('end', (end) => {
+      callback(undefined, result)
+    })
+  }
+
+  // Merge two arrays and return merged array
+  mergeByteArray(currentArray, arrayToMerge) {
+    const mergedArray = new currentArray.constructor(currentArray.length + arrayToMerge.length)
+    mergedArray.set(currentArray)
+    mergedArray.set(arrayToMerge, currentArray.length)
+    return mergedArray
+  }
+
+  // Build a base 64 image from array
+  buildImageFromArray(resource, byteArray) {
+    return 'data:' + resource.contentType + ';base64,' + btoa(
+      byteArray.reduce(
+        (data, byte) => data + String.fromCharCode(byte), ''
+      )
+    )
   }
 }
 module.exports = WebStore;
