@@ -220,13 +220,15 @@ class WebStore {
   }
 
   //  Get Resource Image from name
-  getImage({
-    imageName
+  getResource({
+    resourceName,
+    resourceUuid
   }, callback) {
     const { GetResourceRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new GetResourceRequest()
     request.setClientRequest(this.getClientContext())
-    request.setResourceName(imageName)
+    request.setResourceName(resourceName)
+    request.setResourceUuid(resourceUuid)
     const stream = this.getStoreService().getResource(request)//, callback)
     let result = new Uint8Array()
     stream.on('data', (response) => {
