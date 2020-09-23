@@ -260,5 +260,40 @@ class WebStore {
       )
     )
   }
+
+  //  Create Cart
+  createCart({
+    token
+  }, callback) {
+    const { CreateCartRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new CreateCartRequest()
+    if (token) {
+      request.setClientRequest(this.createClientRequest(token))
+      request.setIsGuest(false)
+    } else {
+      request.setClientRequest(this.getClientContext())
+      request.setIsGuest(true)
+    }
+    this.getStoreService().createCart(request, callback)
+  }
+
+  //  Get Cart
+  getCart({
+    token,
+    cartId
+  }, callback) {
+    const { GetCartRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new GetCartRequest()
+    if (token) {
+      request.setClientRequest(this.createClientRequest(token))
+      request.setIsGuest(false)
+      request.setId(cartId)
+    } else {
+      request.setClientRequest(this.getClientContext())
+      request.setIsGuest(true)
+      request.setUuid(cartId)
+    }
+    this.getStoreService().getCart(request, callback)
+  }
 }
 module.exports = WebStore;

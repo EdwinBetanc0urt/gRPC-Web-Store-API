@@ -20,6 +20,17 @@ var grpc = require('grpc');
 var proto_web_store_pb = require('../proto/web_store_pb.js');
 var proto_client_pb = require('../proto/client_pb.js');
 
+function serialize_data_Cart(arg) {
+  if (!(arg instanceof proto_web_store_pb.Cart)) {
+    throw new Error('Expected argument of type data.Cart');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_data_Cart(buffer_arg) {
+  return proto_web_store_pb.Cart.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_data_ChangePasswordRequest(arg) {
   if (!(arg instanceof proto_web_store_pb.ChangePasswordRequest)) {
     throw new Error('Expected argument of type data.ChangePasswordRequest');
@@ -42,6 +53,17 @@ function deserialize_data_ChangePasswordResponse(buffer_arg) {
   return proto_web_store_pb.ChangePasswordResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_data_CreateCartRequest(arg) {
+  if (!(arg instanceof proto_web_store_pb.CreateCartRequest)) {
+    throw new Error('Expected argument of type data.CreateCartRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_data_CreateCartRequest(buffer_arg) {
+  return proto_web_store_pb.CreateCartRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_data_CreateCustomerRequest(arg) {
   if (!(arg instanceof proto_web_store_pb.CreateCustomerRequest)) {
     throw new Error('Expected argument of type data.CreateCustomerRequest');
@@ -62,6 +84,17 @@ function serialize_data_Customer(arg) {
 
 function deserialize_data_Customer(buffer_arg) {
   return proto_web_store_pb.Customer.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_data_GetCartRequest(arg) {
+  if (!(arg instanceof proto_web_store_pb.GetCartRequest)) {
+    throw new Error('Expected argument of type data.GetCartRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_data_GetCartRequest(buffer_arg) {
+  return proto_web_store_pb.GetCartRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_data_GetCustomerRequest(arg) {
@@ -317,6 +350,30 @@ getResource: {
     requestDeserialize: deserialize_data_GetResourceRequest,
     responseSerialize: serialize_data_Resource,
     responseDeserialize: deserialize_data_Resource,
+  },
+  // 	Create Cart: POST /api/cart/create
+createCart: {
+    path: '/data.WebStore/CreateCart',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_web_store_pb.CreateCartRequest,
+    responseType: proto_web_store_pb.Cart,
+    requestSerialize: serialize_data_CreateCartRequest,
+    requestDeserialize: deserialize_data_CreateCartRequest,
+    responseSerialize: serialize_data_Cart,
+    responseDeserialize: deserialize_data_Cart,
+  },
+  // 	Pull Cart: GET /api/cart/pull
+getCart: {
+    path: '/data.WebStore/GetCart',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_web_store_pb.GetCartRequest,
+    responseType: proto_web_store_pb.Cart,
+    requestSerialize: serialize_data_GetCartRequest,
+    requestDeserialize: deserialize_data_GetCartRequest,
+    responseSerialize: serialize_data_Cart,
+    responseDeserialize: deserialize_data_Cart,
   },
 };
 
