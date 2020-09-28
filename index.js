@@ -287,13 +287,155 @@ class WebStore {
     if (token) {
       request.setClientRequest(this.createClientRequest(token))
       request.setIsGuest(false)
-      request.setId(cartId)
+      request.setCartId(cartId)
     } else {
       request.setClientRequest(this.getClientContext())
       request.setIsGuest(true)
-      request.setUuid(cartId)
+      request.setCartUuid(cartId)
     }
     this.getStoreService().getCart(request, callback)
+  }
+
+  //  Get Cart
+  updateCart({
+    token,
+    cartId,
+    sku,
+    quantity
+  }, callback) {
+    const { UpdateCartRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new UpdateCartRequest()
+    if (token) {
+      request.setClientRequest(this.createClientRequest(token))
+      request.setIsGuest(false)
+      request.setCartId(cartId)
+    } else {
+      request.setClientRequest(this.getClientContext())
+      request.setIsGuest(true)
+      request.setCartUuid(cartId)
+    }
+    request.setSku(sku)
+    request.setQuantity(quantity)
+    this.getStoreService().updateCart(request, callback)
+  }
+
+  //  Get Payment Methods
+  getPaymentMethods({
+    token,
+    cartId
+  }, callback) {
+    const { ListPaymentMethodsRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new ListPaymentMethodsRequest()
+    if (token) {
+      request.setClientRequest(this.createClientRequest(token))
+      request.setCartId(cartId)
+    } else {
+      request.setClientRequest(this.getClientContext())
+      request.setCartUuid(cartId)
+    }
+    this.getStoreService().listPaymentMethods(request, callback)
+  }
+
+  //  Get Shipping Methods
+  getShippingMethods({
+    token,
+    cartId,
+    countryCode,
+    regionId,
+    regionName,
+    cityName,
+    postalCode,
+    address1,
+    address2,
+    address3,
+    address4
+  }, callback) {
+    const { ListShippingMethodsRequest, AddressRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new ListShippingMethodsRequest()
+    if (token) {
+      request.setClientRequest(this.createClientRequest(token))
+      request.setCartId(cartId)
+    } else {
+      request.setClientRequest(this.getClientContext())
+      request.setCartUuid(cartId)
+    }
+    //  Commons
+    const shippingAddress = new AddressRequest()
+    shippingAddress.setCountryCode(countryCode)
+    shippingAddress.setRegionId(regionId)
+    shippingAddress.setRegionName(regionName)
+    shippingAddress.setCityName(cityName)
+    shippingAddress.setPostalCode(postalCode)
+    shippingAddress.setAddress1(address1)
+    shippingAddress.setAddress2(address2)
+    shippingAddress.setAddress3(address3)
+    shippingAddress.setAddress4(address4)
+    request.setShippingAddress(shippingAddress)
+    this.getStoreService().listShippingMethods(request, callback)
+  }
+
+  //  Get Shipping Information
+  getShippingInformation({
+    token,
+    cartId,
+    shippingAddress,
+    billingAddress,
+    carrierCode,
+    methodCode
+  }, callback) {
+    const { GetShippingInformationRequest, AddressRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new GetShippingInformationRequest()
+    if (token) {
+      request.setClientRequest(this.createClientRequest(token))
+      request.setCartId(cartId)
+    } else {
+      request.setClientRequest(this.getClientContext())
+      request.setCartUuid(cartId)
+    }
+    //  Commons
+    const shippingAddressToSet = new AddressRequest()
+    shippingAddressToSet.setCountryCode(shippingAddress.countryCode)
+    shippingAddressToSet.setCityName(shippingAddress.cityName)
+    shippingAddressToSet.setPostalCode(shippingAddress.postalCode)
+    shippingAddressToSet.setAddress1(shippingAddress.address1)
+    shippingAddressToSet.setAddress2(shippingAddress.address2)
+    shippingAddressToSet.setAddress3(shippingAddress.address3)
+    shippingAddressToSet.setAddress4(shippingAddress.address4)
+    //  Set Shipping Address
+    request.setShippingAddress(shippingAddressToSet)
+    //  Set Billing Address
+    const billingAddressToSet = new AddressRequest()
+    billingAddressToSet.setCountryCode(billingAddress.countryCode)
+    billingAddressToSet.setCityName(billingAddress.cityName)
+    billingAddressToSet.setPostalCode(billingAddress.postalCode)
+    billingAddressToSet.setAddress1(billingAddress.address1)
+    billingAddressToSet.setAddress2(billingAddress.address2)
+    billingAddressToSet.setAddress3(billingAddress.address3)
+    billingAddressToSet.setAddress4(billingAddress.address4)
+    //  Set Shipping Address
+    request.setBillingAddress(billingAddressToSet)
+    //  Set Methods
+    request.setCarrierCode(carrierCode)
+    request.setMethodCode(methodCode)
+    this.getStoreService().getShippingInformation(request, callback)
+  }
+
+  //  Get Cart Totals
+  getCartTotals({
+    token,
+    cartId
+  }, callback) {
+    const { GetCartTotalsRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new GetCartTotalsRequest()
+    if (token) {
+      request.setClientRequest(this.createClientRequest(token))
+      request.setCartId(cartId)
+    } else {
+      request.setClientRequest(this.getClientContext())
+      request.setCartUuid(cartId)
+    }
+    //
+    this.getStoreService().getCartTotals(request, callback)
   }
 }
 module.exports = WebStore;

@@ -47,13 +47,169 @@ service WebStore {
 	rpc CreateCart(CreateCartRequest) returns (Cart) {}
 	//	Pull Cart: GET /api/cart/pull
 	rpc GetCart(GetCartRequest) returns (Cart) {}
+	//	Update Cart: POST /api/cart/update
+	rpc UpdateCart(UpdateCartRequest) returns (CartItem) {}
+	//	Create Order: POST /api/order/create
+	rpc CreateOrder(CreateOrderRequest) returns (Order) {}
+	//	Get Payment Methods: GET /api/cart/payment-methods
+	rpc ListPaymentMethods(ListPaymentMethodsRequest) returns (ListPaymentMethodsResponse) {}
+	//	Get Shipping Methods: POST /api/cart/shipping-methods
+	rpc ListShippingMethods(ListShippingMethodsRequest) returns (ListShippingMethodsResponse) {}
+	//	Get Shipping Information: POST /api/cart/shipping-information
+	rpc GetShippingInformation(GetShippingInformationRequest) returns (ShippingInformation) {}
+	//	Get Cart Totals: GET /api/cart/totals
+	rpc GetCartTotals(GetCartTotalsRequest) returns (CartTotals) {}
+}
+
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#get-api-cart-totals
+message GetCartTotalsRequest {
+	ClientRequest client_request = 1;
+	int32 cart_id = 2;
+	string cart_uuid = 3;
+}
+
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-cart-shipping-information
+message GetShippingInformationRequest {
+	ClientRequest client_request = 1;
+	int32 cart_id = 2;
+	string cart_uuid = 3;
+	AddressRequest shipping_address = 4;
+	AddressRequest billing_address = 5;
+	string carrier_code = 6;
+	string method_code = 7;
+}
+
+//	Address information for request
+message AddressRequest {
+	string first_name = 1;
+	string last_name = 2;
+	int32 location_id = 3;
+	string country_code = 4;
+	int32 region_id = 5;
+	string region_name = 6;
+	string city_name = 7;
+	string postal_code = 8;
+	string address1 = 9;
+	string address2 = 10;
+	string address3 = 11;
+	string address4 = 12;
+}
+
+//	Shipping Information for Order
+message ShippingInformation {
+	Cart cart = 1;
+	repeated PaymentMethod payment_methods = 2;
+	repeated TotalSegment total_segments = 3;
+}
+
+//	Cart Totals
+message CartTotals {
+	Cart cart = 1;
+	repeated TotalSegment total_segments = 2;
+}
+
+//	Segment for Total
+message TotalSegment {
+	string code = 1;
+	string name = 2;
+	double value = 3;
+	string area = 4;
+	repeated ExtensionAttribute taxes = 5;
+
+}
+
+//	Attribute for Total Segments
+message ExtensionAttribute {
+	double amount = 1;
+	int32 group_id = 2;
+	repeated Rate rates = 3;
+}
+
+//	Tax Rate
+message Rate {
+	double rate = 1;
+	string name = 2;
+}
+
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-cart-shipping-methods
+message ListShippingMethodsRequest {
+	ClientRequest client_request = 1;
+	int32 cart_id = 2;
+	string cart_uuid = 3;
+	AddressRequest shipping_address = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+//	List of Payment Methods
+message ListShippingMethodsResponse {
+	int64 record_count = 1;
+	repeated ShippingMethod shipping_methods = 2;
+	string next_page_token = 3;
+}
+
+//	Shipping Method
+message ShippingMethod {
+	int32 id = 1;
+	string carrier_code = 2;
+	string method_code = 3;
+	string carrier_name = 4;
+	string method_name = 5;
+	double amount = 6;
+	double tax_rate = 7;
+	bool is_available = 8;
+}
+
+
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#get-api-cart-payment-methods
+message ListPaymentMethodsRequest {
+	ClientRequest client_request = 1;
+	int32 cart_id = 2;
+	string cart_uuid = 3;
+	int32 page_size = 4;
+	string page_token = 5;
+}
+
+//	List of Payment Methods
+message ListPaymentMethodsResponse {
+	int64 record_count = 1;
+	repeated PaymentMethod payment_methods = 2;
+	string next_page_token = 3;
+}
+
+//	Payment Method
+message PaymentMethod {
+	int32 id = 1;
+	string code = 2;
+	string name = 3;
+}
+
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-order-create
+message CreateOrderRequest {
+	ClientRequest client_request = 1;
+}
+
+//	Order
+message Order {
+	int32 id = 1;
+	string document_no = 2;
+}
+
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-cart-update
+message UpdateCartRequest {
+	ClientRequest client_request = 1;
+	int32 cart_id = 2;
+	string cart_uuid = 3;
+	bool is_guest = 4;
+	string sku = 5;
+	double quantity = 6;
 }
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#get-api-cart-pull
 message GetCartRequest {
 	ClientRequest client_request = 1;
-	int32 id = 2;
-	string uuid = 3;
+	int32 cart_id = 2;
+	string cart_uuid = 3;
 	bool is_guest = 4;
 }
 
@@ -67,7 +223,21 @@ message CreateCartRequest {
 message Cart {
 	int32 id = 1;
 	string uuid = 2;
-	repeated CartItem items = 3;
+	double grand_total = 3;
+	double subtotal = 4;
+	double discount_amount = 5;
+	double subtotal_with_discount = 6;
+	double tax_amount = 7;
+	double shipping_amount = 8;
+	double shipping_discount_amount = 9;
+	double shipping_tax_amount = 10;
+	double base_shipping_tax_amount = 11;
+	double subtotal_incl_tax = 12;
+	double shipping_incl_tax = 13;
+	string base_currency_code = 14;
+	string quote_currency_code = 15;
+	int32 items_quantity = 16;
+	repeated CartItem items = 17;
 }
 
 //	Cart Item
@@ -94,6 +264,15 @@ message CartItem {
 		GIFT = 6;
 	}
 	ProductType product_type = 6;
+	double row_total = 7;
+	double row_total_with_discount = 8;
+	double tax_amount = 9;
+	double tax_percent = 10;
+	double discount_amount = 11;
+	double discount_percent = 12;
+	double price_incl_tax = 13;
+	double row_total_incl_tax = 14;
+	double base_row_total_incl_tax = 15;
 }
 
 // https://docs.storefrontapi.com/guide/default-modules/api.html#image-module
