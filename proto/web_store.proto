@@ -33,6 +33,8 @@ service WebStore {
 	rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {}
 	//  Get Customer: GET /api/user/me
 	rpc GetCustomer(GetCustomerRequest) returns (Customer) {}
+	//	Update Cutomer Info: POST /api/user/me
+	rpc UpdateCustomer(UpdateCustomerRequest) returns (Customer) {}
 	//  Get Stock: GET /api/stock/check/sku
 	rpc GetStock(GetStockRequest) returns (Stock) {}
 	//  List Stock: GET /api/stock/list
@@ -59,6 +61,22 @@ service WebStore {
 	rpc GetShippingInformation(GetShippingInformationRequest) returns (ShippingInformation) {}
 	//	Get Cart Totals: GET /api/cart/totals
 	rpc GetCartTotals(GetCartTotalsRequest) returns (CartTotals) {}
+	//	Post Cart: POST /api/cart/delete
+	rpc DeleteCartItem(DeleteCartItemRequest) returns (Empty) {}
+}
+
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-cart-delete
+message DeleteCartItemRequest {
+	ClientRequest client_request = 1;
+	int32 cart_id = 2;
+	string cart_uuid = 3;
+	string sku = 4;
+	int32 product_id = 5;
+}
+
+//  Empty message
+message Empty {
+
 }
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#get-api-cart-totals
@@ -79,20 +97,40 @@ message GetShippingInformationRequest {
 	string method_code = 7;
 }
 
+//	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-user-me
+message UpdateCustomerRequest {
+	ClientRequest client_request = 1;
+	int32 id = 2;
+	int32 business_partner_group_id = 3;
+	string created = 4;
+	string updated = 5;
+	string organization_name = 6;
+	string email = 7;
+	string first_name = 8;
+	string last_name = 9;
+	int32 web_store_id = 10;
+	int32 website_id = 11;
+	int32 default_billing = 12;
+	int32 default_shipping = 13;
+	repeated AddressRequest addresses = 14;
+}
+
 //	Address information for request
 message AddressRequest {
-	string first_name = 1;
-	string last_name = 2;
-	int32 location_id = 3;
-	string country_code = 4;
-	int32 region_id = 5;
-	string region_name = 6;
-	string city_name = 7;
-	string postal_code = 8;
-	string address1 = 9;
-	string address2 = 10;
-	string address3 = 11;
-	string address4 = 12;
+	int32 id = 1;
+	string first_name = 2;
+	string last_name = 3;
+	int32 location_id = 4;
+	string country_code = 5;
+	int32 region_id = 6;
+	string region_name = 7;
+	string city_name = 8;
+	string postal_code = 9;
+	string phone = 10;
+	string address1 = 11;
+	string address2 = 12;
+	string address3 = 13;
+	string address4 = 14;
 }
 
 //	Shipping Information for Order
@@ -540,17 +578,19 @@ message Customer {
 //	Address
 message Address {
 	int32 id = 1;
-	string name = 2;
+	string first_name = 2;
+	string last_name = 3;
 	//	Location
-	Region region = 3;
-	City city = 4;
-	string address1 = 5;
-	string address2 = 6;
-	string address3 = 7;
-	string address4 = 8;
-	string phone = 9;
-	string postal_code = 10;
-	bool is_ship_to = 11;
+	Region region = 4;
+	City city = 5;
+	string address1 = 6;
+	string address2 = 7;
+	string address3 = 8;
+	string address4 = 9;
+	string phone = 10;
+	string postal_code = 11;
+	bool is_default_shipping = 12;
+	string country_code = 13;
 }
 
 //	City

@@ -119,6 +119,28 @@ function deserialize_data_Customer(buffer_arg) {
   return proto_web_store_pb.Customer.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_data_DeleteCartItemRequest(arg) {
+  if (!(arg instanceof proto_web_store_pb.DeleteCartItemRequest)) {
+    throw new Error('Expected argument of type data.DeleteCartItemRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_data_DeleteCartItemRequest(buffer_arg) {
+  return proto_web_store_pb.DeleteCartItemRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_data_Empty(arg) {
+  if (!(arg instanceof proto_web_store_pb.Empty)) {
+    throw new Error('Expected argument of type data.Empty');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_data_Empty(buffer_arg) {
+  return proto_web_store_pb.Empty.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_data_GetCartRequest(arg) {
   if (!(arg instanceof proto_web_store_pb.GetCartRequest)) {
     throw new Error('Expected argument of type data.GetCartRequest');
@@ -372,6 +394,17 @@ function deserialize_data_UpdateCartRequest(buffer_arg) {
   return proto_web_store_pb.UpdateCartRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_data_UpdateCustomerRequest(arg) {
+  if (!(arg instanceof proto_web_store_pb.UpdateCustomerRequest)) {
+    throw new Error('Expected argument of type data.UpdateCustomerRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_data_UpdateCustomerRequest(buffer_arg) {
+  return proto_web_store_pb.UpdateCustomerRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 // 	Web Store Service used for ADempiere integration with vue store front api
 var WebStoreService = exports.WebStoreService = {
@@ -420,6 +453,18 @@ getCustomer: {
     responseType: proto_web_store_pb.Customer,
     requestSerialize: serialize_data_GetCustomerRequest,
     requestDeserialize: deserialize_data_GetCustomerRequest,
+    responseSerialize: serialize_data_Customer,
+    responseDeserialize: deserialize_data_Customer,
+  },
+  // 	Update Cutomer Info: POST /api/user/me
+updateCustomer: {
+    path: '/data.WebStore/UpdateCustomer',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_web_store_pb.UpdateCustomerRequest,
+    responseType: proto_web_store_pb.Customer,
+    requestSerialize: serialize_data_UpdateCustomerRequest,
+    requestDeserialize: deserialize_data_UpdateCustomerRequest,
     responseSerialize: serialize_data_Customer,
     responseDeserialize: deserialize_data_Customer,
   },
@@ -578,6 +623,18 @@ getCartTotals: {
     requestDeserialize: deserialize_data_GetCartTotalsRequest,
     responseSerialize: serialize_data_CartTotals,
     responseDeserialize: deserialize_data_CartTotals,
+  },
+  // 	Post Cart: POST /api/cart/delete
+deleteCartItem: {
+    path: '/data.WebStore/DeleteCartItem',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_web_store_pb.DeleteCartItemRequest,
+    responseType: proto_web_store_pb.Empty,
+    requestSerialize: serialize_data_DeleteCartItemRequest,
+    requestDeserialize: deserialize_data_DeleteCartItemRequest,
+    responseSerialize: serialize_data_Empty,
+    responseDeserialize: deserialize_data_Empty,
   },
 };
 

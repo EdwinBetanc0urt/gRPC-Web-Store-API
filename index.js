@@ -437,5 +437,59 @@ class WebStore {
     //
     this.getStoreService().getCartTotals(request, callback)
   }
+
+  //  Get Cart
+  deleteCartItem({
+    token,
+    cartId,
+    sku,
+    productId
+  }, callback) {
+    const { DeleteCartItemRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new DeleteCartItemRequest()
+    if (token) {
+      request.setClientRequest(this.createClientRequest(token))
+      request.setCartId(cartId)
+    } else {
+      request.setClientRequest(this.getClientContext())
+      request.setCartUuid(cartId)
+    }
+    request.setSku(sku)
+    request.setProductId(productId)
+    this.getStoreService().deleteCartItem(request, callback)
+  }
+
+  //  Update a new user / customer
+  updateCustomer({
+    customerId,
+    email,
+    firstName,
+    lastName,
+    addresses
+  }, callback) {
+    const { UpdateCustomerRequest, AddressRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new UpdateCustomerRequest()
+    request.setClientRequest(this.getClientContext())
+    request.setId(customerId)
+    request.setEmail(email)
+    request.setFirstName(firstName)
+    request.setLastName(lastName)
+    addresses.forEach(address => {
+      const addressToSet = new AddressRequest()
+      addressToSet.setId(address.id)
+      addressToSet.setFirstName(address.firstname)
+      addressToSet.setLastName(address.lastname)
+      addressToSet.setCountryCode(address.countryCode)
+      addressToSet.setCityName(address.cityName)
+      addressToSet.setPostalCode(address.postalCode)
+      addressToSet.setPhone(address.phone)
+      addressToSet.setAddress1(address.address1)
+      addressToSet.setAddress2(address.address2)
+      addressToSet.setAddress3(address.address3)
+      addressToSet.setAddress4(address.address4)
+      request.addAddresses(addressToSet)
+    })
+    this.getStoreService().updateCustomer(request, callback)
+  }
 }
 module.exports = WebStore;
