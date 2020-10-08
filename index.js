@@ -24,7 +24,7 @@ class WebStore {
    */
   constructor(config) {
     if(config) {
-      const adempiereConfig = config.adempiere.api
+      const adempiereConfig = config.adempiereStore.api
       this.accessHost = adempiereConfig.accessHost
       this.storeHost = adempiereConfig.storeHost
       this.version = adempiereConfig.version
@@ -53,7 +53,7 @@ class WebStore {
         client.setSessionUuid(response.getUuid())
         client.setLanguage(language)
         current.setClientContext(client)
-        console.log('ADempiere Client Started')
+        console.log('ADempiere Store Client Started')
       } else if(err) {
         console.log(err)
       }
@@ -106,19 +106,15 @@ class WebStore {
   //  Login with a user
   login({
     user,
-    password,
-    roleUuid,
-    organizationUuid
+    password
   }, callback) {
     const { LoginRequest } = require('./src/grpc/proto/access_pb.js')
     const request = new LoginRequest()
-    request.setUsername(user)
-    request.setUserpass(password)
-    request.setRoleuuid(roleUuid)
-    request.setOrganizationuuid(organizationUuid)
+    request.setUserName(user)
+    request.setUserPass(password)
     request.setLanguage(this.language)
-    request.setClientversion(this.version)
-    this.getAccessService().runLoginDefault(request, callback)
+    request.setClientVersion(this.version)
+    this.getAccessService().runLogin(request, callback)
   }
 
   //  Create a new user / customer

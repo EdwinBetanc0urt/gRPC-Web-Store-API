@@ -19,6 +19,39 @@
 var grpc = require('grpc');
 var proto_access_pb = require('../proto/access_pb.js');
 
+function serialize_access_ChangeRoleRequest(arg) {
+  if (!(arg instanceof proto_access_pb.ChangeRoleRequest)) {
+    throw new Error('Expected argument of type access.ChangeRoleRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_access_ChangeRoleRequest(buffer_arg) {
+  return proto_access_pb.ChangeRoleRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_access_ListRolesRequest(arg) {
+  if (!(arg instanceof proto_access_pb.ListRolesRequest)) {
+    throw new Error('Expected argument of type access.ListRolesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_access_ListRolesRequest(buffer_arg) {
+  return proto_access_pb.ListRolesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_access_ListRolesResponse(arg) {
+  if (!(arg instanceof proto_access_pb.ListRolesResponse)) {
+    throw new Error('Expected argument of type access.ListRolesResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_access_ListRolesResponse(buffer_arg) {
+  return proto_access_pb.ListRolesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_access_LoginRequest(arg) {
   if (!(arg instanceof proto_access_pb.LoginRequest)) {
     throw new Error('Expected argument of type access.LoginRequest');
@@ -52,6 +85,17 @@ function deserialize_access_Menu(buffer_arg) {
   return proto_access_pb.Menu.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_access_MenuRequest(arg) {
+  if (!(arg instanceof proto_access_pb.MenuRequest)) {
+    throw new Error('Expected argument of type access.MenuRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_access_MenuRequest(buffer_arg) {
+  return proto_access_pb.MenuRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_access_Session(arg) {
   if (!(arg instanceof proto_access_pb.Session)) {
     throw new Error('Expected argument of type access.Session');
@@ -74,6 +118,17 @@ function deserialize_access_SessionRequest(buffer_arg) {
   return proto_access_pb.SessionRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_access_UserInfo(arg) {
+  if (!(arg instanceof proto_access_pb.UserInfo)) {
+    throw new Error('Expected argument of type access.UserInfo');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_access_UserInfo(buffer_arg) {
+  return proto_access_pb.UserInfo.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_access_UserInfoRequest(arg) {
   if (!(arg instanceof proto_access_pb.UserInfoRequest)) {
     throw new Error('Expected argument of type access.UserInfoRequest');
@@ -85,47 +140,12 @@ function deserialize_access_UserInfoRequest(buffer_arg) {
   return proto_access_pb.UserInfoRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_access_UserInfoValue(arg) {
-  if (!(arg instanceof proto_access_pb.UserInfoValue)) {
-    throw new Error('Expected argument of type access.UserInfoValue');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_access_UserInfoValue(buffer_arg) {
-  return proto_access_pb.UserInfoValue.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 
 // The greeting service definition.
 var SecurityService = exports.SecurityService = {
-  // Request user roles
-getUserInfo: {
-    path: '/access.Security/GetUserInfo',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_access_pb.LoginRequest,
-    responseType: proto_access_pb.UserInfoValue,
-    requestSerialize: serialize_access_LoginRequest,
-    requestDeserialize: deserialize_access_LoginRequest,
-    responseSerialize: serialize_access_UserInfoValue,
-    responseDeserialize: deserialize_access_UserInfoValue,
-  },
   // Request login from user
 runLogin: {
     path: '/access.Security/RunLogin',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_access_pb.LoginRequest,
-    responseType: proto_access_pb.Session,
-    requestSerialize: serialize_access_LoginRequest,
-    requestDeserialize: deserialize_access_LoginRequest,
-    responseSerialize: serialize_access_Session,
-    responseDeserialize: deserialize_access_Session,
-  },
-  // Request login and role
-runLoginDefault: {
-    path: '/access.Security/RunLoginDefault',
     requestStream: false,
     responseStream: false,
     requestType: proto_access_pb.LoginRequest,
@@ -148,26 +168,26 @@ runLogout: {
     responseDeserialize: deserialize_access_Session,
   },
   // Request user roles from Session
-getUserInfoFromSession: {
-    path: '/access.Security/GetUserInfoFromSession',
+getUserInfo: {
+    path: '/access.Security/GetUserInfo',
     requestStream: false,
     responseStream: false,
     requestType: proto_access_pb.UserInfoRequest,
-    responseType: proto_access_pb.UserInfoValue,
+    responseType: proto_access_pb.UserInfo,
     requestSerialize: serialize_access_UserInfoRequest,
     requestDeserialize: deserialize_access_UserInfoRequest,
-    responseSerialize: serialize_access_UserInfoValue,
-    responseDeserialize: deserialize_access_UserInfoValue,
+    responseSerialize: serialize_access_UserInfo,
+    responseDeserialize: deserialize_access_UserInfo,
   },
   // Request Menu from Parent UUID
-getMenuAndChild: {
-    path: '/access.Security/GetMenuAndChild',
+getMenu: {
+    path: '/access.Security/GetMenu',
     requestStream: false,
     responseStream: false,
-    requestType: proto_access_pb.UserInfoRequest,
+    requestType: proto_access_pb.MenuRequest,
     responseType: proto_access_pb.Menu,
-    requestSerialize: serialize_access_UserInfoRequest,
-    requestDeserialize: deserialize_access_UserInfoRequest,
+    requestSerialize: serialize_access_MenuRequest,
+    requestDeserialize: deserialize_access_MenuRequest,
     responseSerialize: serialize_access_Menu,
     responseDeserialize: deserialize_access_Menu,
   },
@@ -176,10 +196,10 @@ runChangeRole: {
     path: '/access.Security/RunChangeRole',
     requestStream: false,
     responseStream: false,
-    requestType: proto_access_pb.UserInfoRequest,
+    requestType: proto_access_pb.ChangeRoleRequest,
     responseType: proto_access_pb.Session,
-    requestSerialize: serialize_access_UserInfoRequest,
-    requestDeserialize: deserialize_access_UserInfoRequest,
+    requestSerialize: serialize_access_ChangeRoleRequest,
+    requestDeserialize: deserialize_access_ChangeRoleRequest,
     responseSerialize: serialize_access_Session,
     responseDeserialize: deserialize_access_Session,
   },
@@ -194,6 +214,18 @@ getSession: {
     requestDeserialize: deserialize_access_SessionRequest,
     responseSerialize: serialize_access_Session,
     responseDeserialize: deserialize_access_Session,
+  },
+  // List Roles
+listRoles: {
+    path: '/access.Security/ListRoles',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_access_pb.ListRolesRequest,
+    responseType: proto_access_pb.ListRolesResponse,
+    requestSerialize: serialize_access_ListRolesRequest,
+    requestDeserialize: deserialize_access_ListRolesRequest,
+    responseSerialize: serialize_access_ListRolesResponse,
+    responseDeserialize: deserialize_access_ListRolesResponse,
   },
 };
 

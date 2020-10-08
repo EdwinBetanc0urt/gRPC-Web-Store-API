@@ -1,6 +1,6 @@
 {
   "name": "@adempiere/grpc-web-store-api",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "ADempiere Web Store write in Javascript for a node service",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/erpcya/gRPC-Web-Store.git"
+    "url": "git+https://github.com/erpcya/gRPC-Web-Store-API.git"
   },
   "author": "Yamel Senih",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/erpcya/gRPC-Web-Store/issues"
+    "url": "https://github.com/erpcya/gRPC-Web-Store-API/issues"
   },
-  "homepage": "https://github.com/erpcya/gRPC-Web-Store#readme",
+  "homepage": "https://github.com/erpcya/gRPC-Web-Store-API#readme",
   "dependencies": {
     "google-protobuf": "^3.12.4",
     "grpc": "^1.11.0"
