@@ -124,15 +124,16 @@ message Session {
 	Role role = 5;
 	bool processed = 6;
 	string language = 7;
-	string country_code = 8;
-	string country_name = 9;
-	string display_sequence = 10;
-	string currency_name = 11;
-	string currency_iso_code = 12;
-	string currency_symbol = 13;
-	int32 standard_precision = 14;
-	int32 costing_precision = 15;
-	map<string, ContextValue> default_context = 16;
+	int32 country_id = 8;
+	string country_code = 9;
+	string country_name = 10;
+	string display_sequence = 11;
+	string currency_name = 12;
+	string currency_iso_code = 13;
+	string currency_symbol = 14;
+	int32 standard_precision = 15;
+	int32 costing_precision = 16;
+	map<string, ContextValue> default_context = 17;
 }
 
 // Define value for object

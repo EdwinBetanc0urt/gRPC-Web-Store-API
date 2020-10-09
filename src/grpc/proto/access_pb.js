@@ -2438,14 +2438,15 @@ proto.access.Session.toObject = function(includeInstance, msg) {
     role: (f = msg.getRole()) && proto.access.Role.toObject(includeInstance, f),
     processed: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
     language: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    countryCode: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    countryName: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    displaySequence: jspb.Message.getFieldWithDefault(msg, 10, ""),
-    currencyName: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    currencyIsoCode: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    currencySymbol: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    standardPrecision: jspb.Message.getFieldWithDefault(msg, 14, 0),
-    costingPrecision: jspb.Message.getFieldWithDefault(msg, 15, 0),
+    countryId: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    countryCode: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    countryName: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    displaySequence: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    currencyName: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    currencyIsoCode: jspb.Message.getFieldWithDefault(msg, 13, ""),
+    currencySymbol: jspb.Message.getFieldWithDefault(msg, 14, ""),
+    standardPrecision: jspb.Message.getFieldWithDefault(msg, 15, 0),
+    costingPrecision: jspb.Message.getFieldWithDefault(msg, 16, 0),
     defaultContextMap: (f = msg.getDefaultContextMap()) ? f.toObject(includeInstance, proto.access.ContextValue.toObject) : []
   };
 
@@ -2514,38 +2515,42 @@ proto.access.Session.deserializeBinaryFromReader = function(msg, reader) {
       msg.setLanguage(value);
       break;
     case 8:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCountryCode(value);
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setCountryId(value);
       break;
     case 9:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCountryName(value);
+      msg.setCountryCode(value);
       break;
     case 10:
       var value = /** @type {string} */ (reader.readString());
-      msg.setDisplaySequence(value);
+      msg.setCountryName(value);
       break;
     case 11:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCurrencyName(value);
+      msg.setDisplaySequence(value);
       break;
     case 12:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCurrencyIsoCode(value);
+      msg.setCurrencyName(value);
       break;
     case 13:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCurrencySymbol(value);
+      msg.setCurrencyIsoCode(value);
       break;
     case 14:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setStandardPrecision(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCurrencySymbol(value);
       break;
     case 15:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setCostingPrecision(value);
+      msg.setStandardPrecision(value);
       break;
     case 16:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setCostingPrecision(value);
+      break;
+    case 17:
       var value = msg.getDefaultContextMap();
       reader.readMessage(value, function(message, reader) {
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.access.ContextValue.deserializeBinaryFromReader, "", new proto.access.ContextValue());
@@ -2631,65 +2636,72 @@ proto.access.Session.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getCountryCode();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getCountryId();
+  if (f !== 0) {
+    writer.writeInt32(
       8,
       f
     );
   }
-  f = message.getCountryName();
+  f = message.getCountryCode();
   if (f.length > 0) {
     writer.writeString(
       9,
       f
     );
   }
-  f = message.getDisplaySequence();
+  f = message.getCountryName();
   if (f.length > 0) {
     writer.writeString(
       10,
       f
     );
   }
-  f = message.getCurrencyName();
+  f = message.getDisplaySequence();
   if (f.length > 0) {
     writer.writeString(
       11,
       f
     );
   }
-  f = message.getCurrencyIsoCode();
+  f = message.getCurrencyName();
   if (f.length > 0) {
     writer.writeString(
       12,
       f
     );
   }
-  f = message.getCurrencySymbol();
+  f = message.getCurrencyIsoCode();
   if (f.length > 0) {
     writer.writeString(
       13,
       f
     );
   }
-  f = message.getStandardPrecision();
-  if (f !== 0) {
-    writer.writeInt32(
+  f = message.getCurrencySymbol();
+  if (f.length > 0) {
+    writer.writeString(
       14,
       f
     );
   }
-  f = message.getCostingPrecision();
+  f = message.getStandardPrecision();
   if (f !== 0) {
     writer.writeInt32(
       15,
       f
     );
   }
+  f = message.getCostingPrecision();
+  if (f !== 0) {
+    writer.writeInt32(
+      16,
+      f
+    );
+  }
   f = message.getDefaultContextMap(true);
   if (f && f.getLength() > 0) {
-    f.serializeBinary(16, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.access.ContextValue.serializeBinaryToWriter);
+    f.serializeBinary(17, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.access.ContextValue.serializeBinaryToWriter);
   }
 };
 
@@ -2859,28 +2871,28 @@ proto.access.Session.prototype.setLanguage = function(value) {
 
 
 /**
- * optional string country_code = 8;
+ * optional int32 country_id = 8;
+ * @return {number}
+ */
+proto.access.Session.prototype.getCountryId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.access.Session} returns this
+ */
+proto.access.Session.prototype.setCountryId = function(value) {
+  return jspb.Message.setProto3IntField(this, 8, value);
+};
+
+
+/**
+ * optional string country_code = 9;
  * @return {string}
  */
 proto.access.Session.prototype.getCountryCode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.access.Session} returns this
- */
-proto.access.Session.prototype.setCountryCode = function(value) {
-  return jspb.Message.setProto3StringField(this, 8, value);
-};
-
-
-/**
- * optional string country_name = 9;
- * @return {string}
- */
-proto.access.Session.prototype.getCountryName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
@@ -2889,16 +2901,16 @@ proto.access.Session.prototype.getCountryName = function() {
  * @param {string} value
  * @return {!proto.access.Session} returns this
  */
-proto.access.Session.prototype.setCountryName = function(value) {
+proto.access.Session.prototype.setCountryCode = function(value) {
   return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
 /**
- * optional string display_sequence = 10;
+ * optional string country_name = 10;
  * @return {string}
  */
-proto.access.Session.prototype.getDisplaySequence = function() {
+proto.access.Session.prototype.getCountryName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
 };
 
@@ -2907,16 +2919,16 @@ proto.access.Session.prototype.getDisplaySequence = function() {
  * @param {string} value
  * @return {!proto.access.Session} returns this
  */
-proto.access.Session.prototype.setDisplaySequence = function(value) {
+proto.access.Session.prototype.setCountryName = function(value) {
   return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
 /**
- * optional string currency_name = 11;
+ * optional string display_sequence = 11;
  * @return {string}
  */
-proto.access.Session.prototype.getCurrencyName = function() {
+proto.access.Session.prototype.getDisplaySequence = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
 };
 
@@ -2925,16 +2937,16 @@ proto.access.Session.prototype.getCurrencyName = function() {
  * @param {string} value
  * @return {!proto.access.Session} returns this
  */
-proto.access.Session.prototype.setCurrencyName = function(value) {
+proto.access.Session.prototype.setDisplaySequence = function(value) {
   return jspb.Message.setProto3StringField(this, 11, value);
 };
 
 
 /**
- * optional string currency_iso_code = 12;
+ * optional string currency_name = 12;
  * @return {string}
  */
-proto.access.Session.prototype.getCurrencyIsoCode = function() {
+proto.access.Session.prototype.getCurrencyName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
 };
 
@@ -2943,16 +2955,16 @@ proto.access.Session.prototype.getCurrencyIsoCode = function() {
  * @param {string} value
  * @return {!proto.access.Session} returns this
  */
-proto.access.Session.prototype.setCurrencyIsoCode = function(value) {
+proto.access.Session.prototype.setCurrencyName = function(value) {
   return jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
 /**
- * optional string currency_symbol = 13;
+ * optional string currency_iso_code = 13;
  * @return {string}
  */
-proto.access.Session.prototype.getCurrencySymbol = function() {
+proto.access.Session.prototype.getCurrencyIsoCode = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
 };
 
@@ -2961,34 +2973,34 @@ proto.access.Session.prototype.getCurrencySymbol = function() {
  * @param {string} value
  * @return {!proto.access.Session} returns this
  */
-proto.access.Session.prototype.setCurrencySymbol = function(value) {
+proto.access.Session.prototype.setCurrencyIsoCode = function(value) {
   return jspb.Message.setProto3StringField(this, 13, value);
 };
 
 
 /**
- * optional int32 standard_precision = 14;
+ * optional string currency_symbol = 14;
+ * @return {string}
+ */
+proto.access.Session.prototype.getCurrencySymbol = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.access.Session} returns this
+ */
+proto.access.Session.prototype.setCurrencySymbol = function(value) {
+  return jspb.Message.setProto3StringField(this, 14, value);
+};
+
+
+/**
+ * optional int32 standard_precision = 15;
  * @return {number}
  */
 proto.access.Session.prototype.getStandardPrecision = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.access.Session} returns this
- */
-proto.access.Session.prototype.setStandardPrecision = function(value) {
-  return jspb.Message.setProto3IntField(this, 14, value);
-};
-
-
-/**
- * optional int32 costing_precision = 15;
- * @return {number}
- */
-proto.access.Session.prototype.getCostingPrecision = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
 };
 
@@ -2997,20 +3009,38 @@ proto.access.Session.prototype.getCostingPrecision = function() {
  * @param {number} value
  * @return {!proto.access.Session} returns this
  */
-proto.access.Session.prototype.setCostingPrecision = function(value) {
+proto.access.Session.prototype.setStandardPrecision = function(value) {
   return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
 /**
- * map<string, ContextValue> default_context = 16;
+ * optional int32 costing_precision = 16;
+ * @return {number}
+ */
+proto.access.Session.prototype.getCostingPrecision = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.access.Session} returns this
+ */
+proto.access.Session.prototype.setCostingPrecision = function(value) {
+  return jspb.Message.setProto3IntField(this, 16, value);
+};
+
+
+/**
+ * map<string, ContextValue> default_context = 17;
  * @param {boolean=} opt_noLazyCreate Do not create the map if
  * empty, instead returning `undefined`
  * @return {!jspb.Map<string,!proto.access.ContextValue>}
  */
 proto.access.Session.prototype.getDefaultContextMap = function(opt_noLazyCreate) {
   return /** @type {!jspb.Map<string,!proto.access.ContextValue>} */ (
-      jspb.Message.getMapField(this, 16, opt_noLazyCreate,
+      jspb.Message.getMapField(this, 17, opt_noLazyCreate,
       proto.access.ContextValue));
 };
 
