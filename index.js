@@ -487,5 +487,67 @@ class WebStore {
     })
     this.getStoreService().updateCustomer(request, callback)
   }
+
+  //  Create Order
+  createOrder({
+    token,
+    cartId,
+    userId,
+    shippingAddress,
+    billingAddress,
+    carrierCode,
+    methodCode,
+    paymentMethodCode,
+    products
+  }, callback) {
+    const { CreateOrderRequest, AddressRequest, ProductOrderLine } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new CreateOrderRequest()
+    if (token) {
+      request.setClientRequest(this.createClientRequest(token))
+    } else {
+      request.setClientRequest(this.getClientContext())
+    }
+    if(Number(cartId) > 0) {
+      request.setCartId(Number(cartId))
+    } else {
+      request.setCartUuid(cartId)
+    }
+    request.setUserId(userId)
+    //  Commons
+    const shippingAddressToSet = new AddressRequest()
+    shippingAddressToSet.setCountryCode(shippingAddress.countryCode)
+    shippingAddressToSet.setCityName(shippingAddress.cityName)
+    shippingAddressToSet.setPostalCode(shippingAddress.postalCode)
+    shippingAddressToSet.setAddress1(shippingAddress.address1)
+    shippingAddressToSet.setAddress2(shippingAddress.address2)
+    shippingAddressToSet.setAddress3(shippingAddress.address3)
+    shippingAddressToSet.setAddress4(shippingAddress.address4)
+    //  Set Shipping Address
+    request.setShippingAddress(shippingAddressToSet)
+    //  Set Billing Address
+    const billingAddressToSet = new AddressRequest()
+    billingAddressToSet.setCountryCode(billingAddress.countryCode)
+    billingAddressToSet.setCityName(billingAddress.cityName)
+    billingAddressToSet.setPostalCode(billingAddress.postalCode)
+    billingAddressToSet.setAddress1(billingAddress.address1)
+    billingAddressToSet.setAddress2(billingAddress.address2)
+    billingAddressToSet.setAddress3(billingAddress.address3)
+    billingAddressToSet.setAddress4(billingAddress.address4)
+    //  Set Shipping Address
+    request.setBillingAddress(billingAddressToSet)
+    //  Set Methods
+    request.setCarrierCode(carrierCode)
+    request.setMethodCode(methodCode)
+    request.setPaymentMethodCode(paymentMethodCode)
+    if(products) {
+      products.map(product => {
+        const productOrderLine = new ProductOrderLine()
+        productOrderLine.setId(product.id)
+        productOrderLine.setQuantity(product.quantity)
+        request.addProducts(productOrderLine)
+      })
+    }
+    this.getStoreService().createOrder(request, callback)
+  }
 }
 module.exports = WebStore;
