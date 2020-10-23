@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/erpcya/gRPC-Web-Store-API.git"
+    "url": "git+https://github.com/adempiere/gRPC-Web-Store-API.git"
   },
   "author": "Yamel Senih",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/erpcya/gRPC-Web-Store-API/issues"
+    "url": "https://github.com/adempiere/gRPC-Web-Store-API/issues"
   },
-  "homepage": "https://github.com/erpcya/gRPC-Web-Store-API#readme",
+  "homepage": "https://github.com/adempiere/gRPC-Web-Store-API#readme",
   "dependencies": {
     "google-protobuf": "^3.12.4",
     "grpc": "^1.11.0"
