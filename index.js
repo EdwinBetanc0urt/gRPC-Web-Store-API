@@ -339,6 +339,8 @@ class WebStore {
     countryCode,
     regionId,
     regionName,
+    firstName,
+    lastName,
     cityName,
     postalCode,
     address1,
@@ -357,6 +359,8 @@ class WebStore {
     }
     //  Commons
     const shippingAddress = new AddressRequest()
+    shippingAddress.setFirstName(firstName)
+    shippingAddress.setLastName(lastName)
     shippingAddress.setCountryCode(countryCode)
     shippingAddress.setRegionId(regionId)
     shippingAddress.setRegionName(regionName)
@@ -390,6 +394,8 @@ class WebStore {
     }
     //  Commons
     const shippingAddressToSet = new AddressRequest()
+    shippingAddressToSet.setFirstName(shippingAddress.firstName)
+    shippingAddressToSet.setLastName(shippingAddress.lastName)
     shippingAddressToSet.setCountryCode(shippingAddress.countryCode)
     shippingAddressToSet.setCityName(shippingAddress.cityName)
     shippingAddressToSet.setPostalCode(shippingAddress.postalCode)
@@ -401,6 +407,8 @@ class WebStore {
     request.setShippingAddress(shippingAddressToSet)
     //  Set Billing Address
     const billingAddressToSet = new AddressRequest()
+    billingAddressToSet.setFirstName(billingAddress.firstName)
+    billingAddressToSet.setLastName(billingAddress.lastName)
     billingAddressToSet.setCountryCode(billingAddress.countryCode)
     billingAddressToSet.setCityName(billingAddress.cityName)
     billingAddressToSet.setPostalCode(billingAddress.postalCode)
@@ -473,8 +481,8 @@ class WebStore {
     addresses.forEach(address => {
       const addressToSet = new AddressRequest()
       addressToSet.setId(address.id)
-      addressToSet.setFirstName(address.firstname)
-      addressToSet.setLastName(address.lastname)
+      addressToSet.setFirstName(address.firstName)
+      addressToSet.setLastName(address.lastName)
       addressToSet.setCountryCode(address.countryCode)
       addressToSet.setCityName(address.cityName)
       addressToSet.setPostalCode(address.postalCode)
@@ -515,6 +523,8 @@ class WebStore {
     request.setUserId(userId)
     //  Commons
     const shippingAddressToSet = new AddressRequest()
+    shippingAddressToSet.setFirstName(shippingAddress.firstName)
+    shippingAddressToSet.setLastName(shippingAddress.lastName)
     shippingAddressToSet.setCountryCode(shippingAddress.countryCode)
     shippingAddressToSet.setCityName(shippingAddress.cityName)
     shippingAddressToSet.setPostalCode(shippingAddress.postalCode)
@@ -527,6 +537,8 @@ class WebStore {
     request.setShippingAddress(shippingAddressToSet)
     //  Set Billing Address
     const billingAddressToSet = new AddressRequest()
+    billingAddressToSet.setFirstName(billingAddress.firstName)
+    billingAddressToSet.setLastName(billingAddress.lastName)
     billingAddressToSet.setCountryCode(billingAddress.countryCode)
     billingAddressToSet.setCityName(billingAddress.cityName)
     billingAddressToSet.setPostalCode(billingAddress.postalCode)

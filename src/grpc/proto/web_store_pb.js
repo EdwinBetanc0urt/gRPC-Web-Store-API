@@ -2783,7 +2783,9 @@ proto.store.AddressRequest.toObject = function(includeInstance, msg) {
     address1: jspb.Message.getFieldWithDefault(msg, 11, ""),
     address2: jspb.Message.getFieldWithDefault(msg, 12, ""),
     address3: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    address4: jspb.Message.getFieldWithDefault(msg, 14, "")
+    address4: jspb.Message.getFieldWithDefault(msg, 14, ""),
+    isDefaultBilling: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
+    isDefaultShipping: jspb.Message.getBooleanFieldWithDefault(msg, 16, false)
   };
 
   if (includeInstance) {
@@ -2875,6 +2877,14 @@ proto.store.AddressRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 14:
       var value = /** @type {string} */ (reader.readString());
       msg.setAddress4(value);
+      break;
+    case 15:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsDefaultBilling(value);
+      break;
+    case 16:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsDefaultShipping(value);
       break;
     default:
       reader.skipField();
@@ -3000,6 +3010,20 @@ proto.store.AddressRequest.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       14,
+      f
+    );
+  }
+  f = message.getIsDefaultBilling();
+  if (f) {
+    writer.writeBool(
+      15,
+      f
+    );
+  }
+  f = message.getIsDefaultShipping();
+  if (f) {
+    writer.writeBool(
+      16,
       f
     );
   }
@@ -3255,6 +3279,42 @@ proto.store.AddressRequest.prototype.getAddress4 = function() {
  */
 proto.store.AddressRequest.prototype.setAddress4 = function(value) {
   return jspb.Message.setProto3StringField(this, 14, value);
+};
+
+
+/**
+ * optional bool is_default_billing = 15;
+ * @return {boolean}
+ */
+proto.store.AddressRequest.prototype.getIsDefaultBilling = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 15, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.store.AddressRequest} returns this
+ */
+proto.store.AddressRequest.prototype.setIsDefaultBilling = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 15, value);
+};
+
+
+/**
+ * optional bool is_default_shipping = 16;
+ * @return {boolean}
+ */
+proto.store.AddressRequest.prototype.getIsDefaultShipping = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 16, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.store.AddressRequest} returns this
+ */
+proto.store.AddressRequest.prototype.setIsDefaultShipping = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 16, value);
 };
 
 
@@ -15827,8 +15887,9 @@ proto.store.Address.toObject = function(includeInstance, msg) {
     address4: jspb.Message.getFieldWithDefault(msg, 9, ""),
     phone: jspb.Message.getFieldWithDefault(msg, 10, ""),
     postalCode: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    isDefaultShipping: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
-    countryCode: jspb.Message.getFieldWithDefault(msg, 13, "")
+    countryCode: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    isDefaultShipping: jspb.Message.getBooleanFieldWithDefault(msg, 13, false),
+    isDefaultBilling: jspb.Message.getBooleanFieldWithDefault(msg, 14, false)
   };
 
   if (includeInstance) {
@@ -15912,12 +15973,16 @@ proto.store.Address.deserializeBinaryFromReader = function(msg, reader) {
       msg.setPostalCode(value);
       break;
     case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCountryCode(value);
+      break;
+    case 13:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsDefaultShipping(value);
       break;
-    case 13:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCountryCode(value);
+    case 14:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsDefaultBilling(value);
       break;
     default:
       reader.skipField();
@@ -16027,17 +16092,24 @@ proto.store.Address.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getIsDefaultShipping();
-  if (f) {
-    writer.writeBool(
+  f = message.getCountryCode();
+  if (f.length > 0) {
+    writer.writeString(
       12,
       f
     );
   }
-  f = message.getCountryCode();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getIsDefaultShipping();
+  if (f) {
+    writer.writeBool(
       13,
+      f
+    );
+  }
+  f = message.getIsDefaultBilling();
+  if (f) {
+    writer.writeBool(
+      14,
       f
     );
   }
@@ -16281,29 +16353,11 @@ proto.store.Address.prototype.setPostalCode = function(value) {
 
 
 /**
- * optional bool is_default_shipping = 12;
- * @return {boolean}
- */
-proto.store.Address.prototype.getIsDefaultShipping = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 12, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.store.Address} returns this
- */
-proto.store.Address.prototype.setIsDefaultShipping = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 12, value);
-};
-
-
-/**
- * optional string country_code = 13;
+ * optional string country_code = 12;
  * @return {string}
  */
 proto.store.Address.prototype.getCountryCode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
 };
 
 
@@ -16312,7 +16366,43 @@ proto.store.Address.prototype.getCountryCode = function() {
  * @return {!proto.store.Address} returns this
  */
 proto.store.Address.prototype.setCountryCode = function(value) {
-  return jspb.Message.setProto3StringField(this, 13, value);
+  return jspb.Message.setProto3StringField(this, 12, value);
+};
+
+
+/**
+ * optional bool is_default_shipping = 13;
+ * @return {boolean}
+ */
+proto.store.Address.prototype.getIsDefaultShipping = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 13, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.store.Address} returns this
+ */
+proto.store.Address.prototype.setIsDefaultShipping = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 13, value);
+};
+
+
+/**
+ * optional bool is_default_billing = 14;
+ * @return {boolean}
+ */
+proto.store.Address.prototype.getIsDefaultBilling = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 14, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.store.Address} returns this
+ */
+proto.store.Address.prototype.setIsDefaultBilling = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 14, value);
 };
 
 
