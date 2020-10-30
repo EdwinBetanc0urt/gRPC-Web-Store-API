@@ -506,9 +506,10 @@ class WebStore {
     carrierCode,
     methodCode,
     paymentMethodCode,
+    paymentAdditionalMethod,
     products
   }, callback) {
-    const { CreateOrderRequest, AddressRequest, ProductOrderLine } = require('./src/grpc/proto/web_store_pb.js')
+    const { CreateOrderRequest, AddressRequest, PaymentRequest, ProductOrderLine } = require('./src/grpc/proto/web_store_pb.js')
     const request = new CreateOrderRequest()
     if (token) {
       request.setClientRequest(this.createClientRequest(token))
@@ -553,6 +554,48 @@ class WebStore {
     request.setCarrierCode(carrierCode)
     request.setMethodCode(methodCode)
     request.setPaymentMethodCode(paymentMethodCode)
+    if(paymentAdditionalMethod && paymentAdditionalMethod.payments) {
+      paymentAdditionalMethod.payments.map(payment => {
+        const paymentRequest = new PaymentRequest()
+        paymentRequest.setBankId(payment.bank_id)
+        paymentRequest.setReferenceNo(payment.reference_no)
+        paymentRequest.setDescription(payment.description)
+        paymentRequest.setAmount(payment.amount)
+        paymentRequest.setPaymentDate(payment.payment_date)
+        paymentRequest.setPaymentMethodCode(payment.payment_method_code)
+        if(payment.billing_address) {
+          const paymentBillingAddressToSet = new AddressRequest()
+          let street = []
+          if (payment.billing_address.street) {
+            street = payment.billing_address.street
+          }
+          const additionalBillingAddress = {
+            firstName: payment.firstname,
+            lastName: payment.lastname,
+            countryCode: payment.country_id,
+            cityName: payment.city,
+            postalCode: payment.postcode,
+            regionId: payment.region_id,
+            address1: street[0],
+            address2: street[1],
+            address3: street[2],
+            address4: street[3]
+          }
+          paymentBillingAddressToSet.setFirstName(additionalBillingAddress.firstName)
+          paymentBillingAddressToSet.setLastName(additionalBillingAddress.lastName)
+          paymentBillingAddressToSet.setCountryCode(additionalBillingAddress.countryCode)
+          paymentBillingAddressToSet.setCityName(additionalBillingAddress.cityName)
+          paymentBillingAddressToSet.setPostalCode(additionalBillingAddress.postalCode)
+          paymentBillingAddressToSet.setRegionId(additionalBillingAddress.regionId)
+          paymentBillingAddressToSet.setAddress1(additionalBillingAddress.address1)
+          paymentBillingAddressToSet.setAddress2(additionalBillingAddress.address2)
+          paymentBillingAddressToSet.setAddress3(additionalBillingAddress.address3)
+          paymentBillingAddressToSet.setAddress4(additionalBillingAddress.address4)
+          paymentRequest.setBillingAddress(paymentBillingAddressToSet)
+          request.addPayments(paymentRequest)
+        }
+      })
+    }
     if(products) {
       products.map(product => {
         const productOrderLine = new ProductOrderLine()
