@@ -554,7 +554,7 @@ class WebStore {
     request.setCarrierCode(carrierCode)
     request.setMethodCode(methodCode)
     request.setPaymentMethodCode(paymentMethodCode)
-    if(paymentAdditionalMethod && paymentAdditionalMethod.payments) {
+    if(paymentAdditionalMethod.payments) {
       paymentAdditionalMethod.payments.map(payment => {
         const paymentRequest = new PaymentRequest()
         paymentRequest.setBankId(payment.bank_id)
@@ -592,8 +592,9 @@ class WebStore {
           paymentBillingAddressToSet.setAddress3(additionalBillingAddress.address3)
           paymentBillingAddressToSet.setAddress4(additionalBillingAddress.address4)
           paymentRequest.setBillingAddress(paymentBillingAddressToSet)
-          request.addPayments(paymentRequest)
         }
+        //  Add to request
+        request.addPayments(paymentRequest)
       })
     }
     if(products) {
