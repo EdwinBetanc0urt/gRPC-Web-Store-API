@@ -563,6 +563,7 @@ class WebStore {
         paymentRequest.setAmount(payment.amount)
         paymentRequest.setPaymentDate(payment.payment_date)
         paymentRequest.setPaymentMethodCode(payment.payment_method_code)
+        paymentRequest.setCurrencyCode(payment.currency_code)
         if(payment.billing_address) {
           const paymentBillingAddressToSet = new AddressRequest()
           let street = []
