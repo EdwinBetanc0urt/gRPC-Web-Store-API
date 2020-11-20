@@ -38,7 +38,7 @@ class WebStore {
 
   //  Init service
   initService() {
-    if(this.clientContext) {
+    if(this.clientContext || !this.user) {
       return
     }
     const current = this
