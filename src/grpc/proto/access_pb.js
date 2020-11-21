@@ -807,7 +807,8 @@ proto.access.LoginRequest.toObject = function(includeInstance, msg) {
     organizationUuid: jspb.Message.getFieldWithDefault(msg, 4, ""),
     warehouseUuid: jspb.Message.getFieldWithDefault(msg, 5, ""),
     clientVersion: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    language: jspb.Message.getFieldWithDefault(msg, 7, "")
+    language: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    token: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -871,6 +872,10 @@ proto.access.LoginRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setLanguage(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setToken(value);
       break;
     default:
       reader.skipField();
@@ -947,6 +952,13 @@ proto.access.LoginRequest.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getToken();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
       f
     );
   }
@@ -1076,6 +1088,24 @@ proto.access.LoginRequest.prototype.getLanguage = function() {
  */
 proto.access.LoginRequest.prototype.setLanguage = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string token = 8;
+ * @return {string}
+ */
+proto.access.LoginRequest.prototype.getToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.access.LoginRequest} returns this
+ */
+proto.access.LoginRequest.prototype.setToken = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 

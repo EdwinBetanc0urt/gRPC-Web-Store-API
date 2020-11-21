@@ -29,8 +29,7 @@ class WebStore {
       this.storeHost = adempiereConfig.storeHost
       this.version = adempiereConfig.version
       this.language = adempiereConfig.language
-      this.user = adempiereConfig.user
-      this.password = adempiereConfig.password
+      this.token = adempiereConfig.token
     }
     this.initAccessService()
     this.initStoreService()
@@ -38,14 +37,13 @@ class WebStore {
 
   //  Init service
   initService() {
-    if(this.clientContext || !this.user) {
+    if(this.clientContext || !this.token) {
       return
     }
     const current = this
     const language = this.language
     this.login({
-      user: this.user,
-      password: this.password
+      token: this.token
     }, function(err, response) {
       if(response) {
         const { ClientRequest } = require('./src/grpc/proto/client_pb.js')
@@ -106,13 +104,22 @@ class WebStore {
   //  Login with a user
   login({
     user,
-    password
+    password,
+    token,
+    roleUuid,
+    organizationUuid,
+    warehouseUuid,
+    language
   }, callback) {
     const { LoginRequest } = require('./src/grpc/proto/access_pb.js')
     const request = new LoginRequest()
     request.setUserName(user)
     request.setUserPass(password)
-    request.setLanguage(this.language)
+    request.setToken(token)
+    request.setRoleUuid(roleUuid)
+    request.setOrganizationUuid(organizationUuid)
+    request.setWarehouseUuid(warehouseUuid)
+    request.setLanguage(language)
     request.setClientVersion(this.version)
     this.getAccessService().runLogin(request, callback)
   }
