@@ -3418,7 +3418,22 @@ proto.access.Role.toObject = function(includeInstance, msg) {
     isCanReport: jspb.Message.getBooleanFieldWithDefault(msg, 7, false),
     isCanExport: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     isPersonalLock: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
-    isPersonalAccess: jspb.Message.getBooleanFieldWithDefault(msg, 10, false)
+    isPersonalAccess: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
+    isAllowInfoAccount: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
+    isAllowInfoBusinessPartner: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
+    isAllowInfoInOut: jspb.Message.getBooleanFieldWithDefault(msg, 13, false),
+    isAllowInfoOrder: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
+    isAllowInfoProduct: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
+    isAllowInfoSchedule: jspb.Message.getBooleanFieldWithDefault(msg, 16, false),
+    isAllowInfoMrp: jspb.Message.getBooleanFieldWithDefault(msg, 17, false),
+    isAllowHtmlView: jspb.Message.getBooleanFieldWithDefault(msg, 18, false),
+    isAllowInfoAsset: jspb.Message.getBooleanFieldWithDefault(msg, 19, false),
+    isAllowInfoCashJournal: jspb.Message.getBooleanFieldWithDefault(msg, 20, false),
+    isAllowInfoInvoice: jspb.Message.getBooleanFieldWithDefault(msg, 21, false),
+    isAllowInfoPayment: jspb.Message.getBooleanFieldWithDefault(msg, 22, false),
+    isAllowInfoResource: jspb.Message.getBooleanFieldWithDefault(msg, 23, false),
+    isAllowInfoCrp: jspb.Message.getBooleanFieldWithDefault(msg, 24, false),
+    isAllowXlsView: jspb.Message.getBooleanFieldWithDefault(msg, 25, false)
   };
 
   if (includeInstance) {
@@ -3494,6 +3509,66 @@ proto.access.Role.deserializeBinaryFromReader = function(msg, reader) {
     case 10:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsPersonalAccess(value);
+      break;
+    case 11:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoAccount(value);
+      break;
+    case 12:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoBusinessPartner(value);
+      break;
+    case 13:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoInOut(value);
+      break;
+    case 14:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoOrder(value);
+      break;
+    case 15:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoProduct(value);
+      break;
+    case 16:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoSchedule(value);
+      break;
+    case 17:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoMrp(value);
+      break;
+    case 18:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowHtmlView(value);
+      break;
+    case 19:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoAsset(value);
+      break;
+    case 20:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoCashJournal(value);
+      break;
+    case 21:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoInvoice(value);
+      break;
+    case 22:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoPayment(value);
+      break;
+    case 23:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoResource(value);
+      break;
+    case 24:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowInfoCrp(value);
+      break;
+    case 25:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsAllowXlsView(value);
       break;
     default:
       reader.skipField();
@@ -3591,6 +3666,111 @@ proto.access.Role.serializeBinaryToWriter = function(message, writer) {
   if (f) {
     writer.writeBool(
       10,
+      f
+    );
+  }
+  f = message.getIsAllowInfoAccount();
+  if (f) {
+    writer.writeBool(
+      11,
+      f
+    );
+  }
+  f = message.getIsAllowInfoBusinessPartner();
+  if (f) {
+    writer.writeBool(
+      12,
+      f
+    );
+  }
+  f = message.getIsAllowInfoInOut();
+  if (f) {
+    writer.writeBool(
+      13,
+      f
+    );
+  }
+  f = message.getIsAllowInfoOrder();
+  if (f) {
+    writer.writeBool(
+      14,
+      f
+    );
+  }
+  f = message.getIsAllowInfoProduct();
+  if (f) {
+    writer.writeBool(
+      15,
+      f
+    );
+  }
+  f = message.getIsAllowInfoSchedule();
+  if (f) {
+    writer.writeBool(
+      16,
+      f
+    );
+  }
+  f = message.getIsAllowInfoMrp();
+  if (f) {
+    writer.writeBool(
+      17,
+      f
+    );
+  }
+  f = message.getIsAllowHtmlView();
+  if (f) {
+    writer.writeBool(
+      18,
+      f
+    );
+  }
+  f = message.getIsAllowInfoAsset();
+  if (f) {
+    writer.writeBool(
+      19,
+      f
+    );
+  }
+  f = message.getIsAllowInfoCashJournal();
+  if (f) {
+    writer.writeBool(
+      20,
+      f
+    );
+  }
+  f = message.getIsAllowInfoInvoice();
+  if (f) {
+    writer.writeBool(
+      21,
+      f
+    );
+  }
+  f = message.getIsAllowInfoPayment();
+  if (f) {
+    writer.writeBool(
+      22,
+      f
+    );
+  }
+  f = message.getIsAllowInfoResource();
+  if (f) {
+    writer.writeBool(
+      23,
+      f
+    );
+  }
+  f = message.getIsAllowInfoCrp();
+  if (f) {
+    writer.writeBool(
+      24,
+      f
+    );
+  }
+  f = message.getIsAllowXlsView();
+  if (f) {
+    writer.writeBool(
+      25,
       f
     );
   }
@@ -3774,6 +3954,276 @@ proto.access.Role.prototype.getIsPersonalAccess = function() {
  */
 proto.access.Role.prototype.setIsPersonalAccess = function(value) {
   return jspb.Message.setProto3BooleanField(this, 10, value);
+};
+
+
+/**
+ * optional bool is_allow_info_account = 11;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoAccount = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 11, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoAccount = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 11, value);
+};
+
+
+/**
+ * optional bool is_allow_info_business_partner = 12;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoBusinessPartner = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 12, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoBusinessPartner = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 12, value);
+};
+
+
+/**
+ * optional bool is_allow_info_in_out = 13;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoInOut = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 13, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoInOut = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 13, value);
+};
+
+
+/**
+ * optional bool is_allow_info_order = 14;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoOrder = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 14, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoOrder = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 14, value);
+};
+
+
+/**
+ * optional bool is_allow_info_product = 15;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoProduct = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 15, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoProduct = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 15, value);
+};
+
+
+/**
+ * optional bool is_allow_info_schedule = 16;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoSchedule = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 16, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoSchedule = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 16, value);
+};
+
+
+/**
+ * optional bool is_allow_info_mrp = 17;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoMrp = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 17, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoMrp = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 17, value);
+};
+
+
+/**
+ * optional bool is_allow_html_view = 18;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowHtmlView = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 18, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowHtmlView = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 18, value);
+};
+
+
+/**
+ * optional bool is_allow_info_asset = 19;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoAsset = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 19, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoAsset = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 19, value);
+};
+
+
+/**
+ * optional bool is_allow_info_cash_journal = 20;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoCashJournal = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 20, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoCashJournal = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 20, value);
+};
+
+
+/**
+ * optional bool is_allow_info_invoice = 21;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoInvoice = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 21, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoInvoice = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 21, value);
+};
+
+
+/**
+ * optional bool is_allow_info_payment = 22;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoPayment = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 22, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoPayment = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 22, value);
+};
+
+
+/**
+ * optional bool is_allow_info_resource = 23;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoResource = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 23, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoResource = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 23, value);
+};
+
+
+/**
+ * optional bool is_allow_info_crp = 24;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowInfoCrp = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 24, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowInfoCrp = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 24, value);
+};
+
+
+/**
+ * optional bool is_allow_xls_view = 25;
+ * @return {boolean}
+ */
+proto.access.Role.prototype.getIsAllowXlsView = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 25, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.access.Role} returns this
+ */
+proto.access.Role.prototype.setIsAllowXlsView = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 25, value);
 };
 
 
