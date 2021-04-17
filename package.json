@@ -2,25 +2,37 @@
   "name": "@adempiere/grpc-web-store-api",
   "version": "1.3.9",
   "description": "ADempiere Web Store write in Javascript for a node service",
+  "author": "Yamel Senih",
+  "contributors": [
+    {
+      "name": "Edwin Betancourt",
+      "email": "EdwinBetanc0urt@outlook.com",
+      "url": "https://github.com/EdwinBetanc0urt/"
+    }
+  ],
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "stub": "npm run stub:access && npm run stub:client && npm run stub:web_store",
+    "stub:access": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:src/grpc/ --grpc_out=grpc_js:src/grpc/ proto/access.proto",
+    "stub:client": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:src/grpc/ --grpc_out=grpc_js:src/grpc/ proto/client.proto",
+    "stub:web_store": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:src/grpc/ --grpc_out=grpc_js:src/grpc/ proto/web_store.proto"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adempiere/gRPC-Web-Store-API.git"
   },
-  "author": "Yamel Senih",
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/adempiere/gRPC-Web-Store-API/issues"
   },
   "homepage": "https://github.com/adempiere/gRPC-Web-Store-API#readme",
   "dependencies": {
-    "google-protobuf": "^3.12.4",
-    "grpc": "^1.11.0"
+    "@grpc/grpc-js": "^1.2.12",
+    "google-protobuf": "^3.15.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grpc-tools": "^1.11.1"
+  },
   "keywords": [
     "compiere",
     "adempiere",
