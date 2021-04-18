@@ -16,7 +16,7 @@
 // along with this program.	If not, see <https://www.gnu.org/licenses/>.            *
 // **********************************************************************************
 'use strict';
-var grpc = require('grpc');
+var grpc = require('@grpc/grpc-js');
 var proto_web_store_pb = require('../proto/web_store_pb.js');
 var proto_client_pb = require('../proto/client_pb.js');
 
