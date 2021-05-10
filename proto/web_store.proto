@@ -295,7 +295,7 @@ message OrderLine {
 		GIFT = 6;
 	}
 	ProductType product_type = 5;
-
+	
 }
 
 //	https://docs.storefrontapi.com/guide/default-modules/api.html#post-api-cart-update

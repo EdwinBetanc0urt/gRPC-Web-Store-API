@@ -16,7 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.            *
 // **********************************************************************************
 'use strict';
-var grpc = require('grpc');
+var grpc = require('@grpc/grpc-js');
 var proto_access_pb = require('../proto/access_pb.js');
 
 function serialize_access_ChangeRoleRequest(arg) {
