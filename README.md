@@ -9,7 +9,6 @@ ADempiere gRPC Web Store API library to Node.js
 [![npm version](https://img.shields.io/npm/v/@adempiere/grpc-web-store.svg)](https://www.npmjs.com/package/@adempiere/grpc-web-store)
 [![License](https://img.shields.io/npm/l/@adempiere/grpc-web-store.svg)](https://github.com/erpcya/adempiere-web-store/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/npm/dm/@adempiere/grpc-web-store.svg)](https://www.npmjs.com/package/@adempiere/grpc-web-store)
-[![Dependencies](https://img.shields.io/librariesio/github/erpcya/grpc-web-store.svg)](https://www.npmjs.com/package/@adempiere/grpc-web-store-api)
 
 ADempiere node.js write in JavaScript for gRPC service, use it for connect with:
 - [ADempiere-gRPC-Server](https://github.com/adempiere/adempiere-gRPC-Server), docker image [erpya/adempiere-grpc-all-in-one](https://hub.docker.com/r/erpya/adempiere-grpc-all-in-one).
