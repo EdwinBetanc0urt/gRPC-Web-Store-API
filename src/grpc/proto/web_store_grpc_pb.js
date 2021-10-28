@@ -207,6 +207,28 @@ function deserialize_store_GetStockRequest(buffer_arg) {
   return proto_web_store_pb.GetStockRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_store_ListOrdersRequest(arg) {
+  if (!(arg instanceof proto_web_store_pb.ListOrdersRequest)) {
+    throw new Error('Expected argument of type store.ListOrdersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_store_ListOrdersRequest(buffer_arg) {
+  return proto_web_store_pb.ListOrdersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_store_ListOrdersResponse(arg) {
+  if (!(arg instanceof proto_web_store_pb.ListOrdersResponse)) {
+    throw new Error('Expected argument of type store.ListOrdersResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_store_ListOrdersResponse(buffer_arg) {
+  return proto_web_store_pb.ListOrdersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_store_ListPaymentMethodsRequest(arg) {
   if (!(arg instanceof proto_web_store_pb.ListPaymentMethodsRequest)) {
     throw new Error('Expected argument of type store.ListPaymentMethodsRequest');
@@ -635,6 +657,18 @@ deleteCartItem: {
     requestDeserialize: deserialize_store_DeleteCartItemRequest,
     responseSerialize: serialize_store_Empty,
     responseDeserialize: deserialize_store_Empty,
+  },
+  // 	GET Orders History: GET /api/user/order-history
+listOrders: {
+    path: '/store.WebStore/ListOrders',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_web_store_pb.ListOrdersRequest,
+    responseType: proto_web_store_pb.ListOrdersResponse,
+    requestSerialize: serialize_store_ListOrdersRequest,
+    requestDeserialize: deserialize_store_ListOrdersRequest,
+    responseSerialize: serialize_store_ListOrdersResponse,
+    responseDeserialize: deserialize_store_ListOrdersResponse,
   },
 };
 

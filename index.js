@@ -615,5 +615,15 @@ class WebStore {
     }
     this.getStoreService().createOrder(request, callback)
   }
+
+  //  Get Order History
+  listOrders({
+    token
+  }, callback) {
+    const { ListOrdersRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const request = new ListOrdersRequest()
+    request.setClientRequest(this.createClientRequest(token))
+    this.getStoreService().listOrders(request, callback)
+  }
 }
 module.exports = WebStore;
