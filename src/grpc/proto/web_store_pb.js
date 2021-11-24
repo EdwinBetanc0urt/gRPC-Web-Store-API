@@ -11224,7 +11224,8 @@ proto.store.GetStockRequest.prototype.toObject = function(opt_includeInstance) {
 proto.store.GetStockRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     clientRequest: (f = msg.getClientRequest()) && proto_client_pb.ClientRequest.toObject(includeInstance, f),
-    sku: jspb.Message.getFieldWithDefault(msg, 2, "")
+    sku: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    storeCode: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -11270,6 +11271,10 @@ proto.store.GetStockRequest.deserializeBinaryFromReader = function(msg, reader) 
       var value = /** @type {string} */ (reader.readString());
       msg.setSku(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStoreCode(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -11311,6 +11316,13 @@ proto.store.GetStockRequest.serializeBinaryToWriter = function(message, writer) 
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getStoreCode();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
       f
     );
   }
@@ -11372,6 +11384,24 @@ proto.store.GetStockRequest.prototype.setSku = function(value) {
 };
 
 
+/**
+ * optional string store_code = 3;
+ * @return {string}
+ */
+proto.store.GetStockRequest.prototype.getStoreCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.store.GetStockRequest} returns this
+ */
+proto.store.GetStockRequest.prototype.setStoreCode = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
 
 
 
@@ -11406,8 +11436,9 @@ proto.store.ListStocksRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     clientRequest: (f = msg.getClientRequest()) && proto_client_pb.ClientRequest.toObject(includeInstance, f),
     sku: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    pageSize: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    pageToken: jspb.Message.getFieldWithDefault(msg, 4, "")
+    storeCode: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    pageSize: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    pageToken: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -11454,10 +11485,14 @@ proto.store.ListStocksRequest.deserializeBinaryFromReader = function(msg, reader
       msg.setSku(value);
       break;
     case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStoreCode(value);
+      break;
+    case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setPageSize(value);
       break;
-    case 4:
+    case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setPageToken(value);
       break;
@@ -11505,17 +11540,24 @@ proto.store.ListStocksRequest.serializeBinaryToWriter = function(message, writer
       f
     );
   }
+  f = message.getStoreCode();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
   f = message.getPageSize();
   if (f !== 0) {
     writer.writeInt32(
-      3,
+      4,
       f
     );
   }
   f = message.getPageToken();
   if (f.length > 0) {
     writer.writeString(
-      4,
+      5,
       f
     );
   }
@@ -11578,11 +11620,29 @@ proto.store.ListStocksRequest.prototype.setSku = function(value) {
 
 
 /**
- * optional int32 page_size = 3;
+ * optional string store_code = 3;
+ * @return {string}
+ */
+proto.store.ListStocksRequest.prototype.getStoreCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.store.ListStocksRequest} returns this
+ */
+proto.store.ListStocksRequest.prototype.setStoreCode = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional int32 page_size = 4;
  * @return {number}
  */
 proto.store.ListStocksRequest.prototype.getPageSize = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
@@ -11591,16 +11651,16 @@ proto.store.ListStocksRequest.prototype.getPageSize = function() {
  * @return {!proto.store.ListStocksRequest} returns this
  */
 proto.store.ListStocksRequest.prototype.setPageSize = function(value) {
-  return jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * optional string page_token = 4;
+ * optional string page_token = 5;
  * @return {string}
  */
 proto.store.ListStocksRequest.prototype.getPageToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
@@ -11609,7 +11669,7 @@ proto.store.ListStocksRequest.prototype.getPageToken = function() {
  * @return {!proto.store.ListStocksRequest} returns this
  */
 proto.store.ListStocksRequest.prototype.setPageToken = function(value) {
-  return jspb.Message.setProto3StringField(this, 4, value);
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 

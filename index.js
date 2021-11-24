@@ -180,23 +180,27 @@ class WebStore {
 
   //  Get Stock from SKU
   getStock({
-    sku
+    sku,
+    storeCode
   }, callback) {
     const { GetStockRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new GetStockRequest()
     request.setClientRequest(this.getClientContext())
     request.setSku(sku)
+    request.setStoreCode(storeCode)
     this.getStoreService().getStock(request, callback)
   }
 
   //  Get Stock from SKU
   listStock({
-    sku
+    sku,
+    storeCode
   }, callback) {
     const { ListStocksRequest } = require('./src/grpc/proto/web_store_pb.js')
     const request = new ListStocksRequest()
     request.setClientRequest(this.getClientContext())
     request.setSku(sku)
+    request.setStoreCode(storeCode)
     this.getStoreService().listStocks(request, callback)
   }
 
