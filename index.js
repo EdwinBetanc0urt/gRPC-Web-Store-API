@@ -512,6 +512,7 @@ class WebStore {
     token,
     cartId,
     userId,
+    customerId,
     shippingAddress,
     billingAddress,
     carrierCode,
@@ -533,6 +534,7 @@ class WebStore {
       request.setCartUuid(cartId)
     }
     request.setUserId(userId)
+    request.setCustomerId(customerId)
     //  Commons
     const shippingAddressToSet = new AddressRequest()
     shippingAddressToSet.setFirstName(shippingAddress.firstName)

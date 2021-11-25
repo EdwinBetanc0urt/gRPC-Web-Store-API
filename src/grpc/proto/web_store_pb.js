@@ -6552,7 +6552,7 @@ proto.store.PaymentMethod.prototype.setName = function(value) {
  * @private {!Array<number>}
  * @const
  */
-proto.store.CreateOrderRequest.repeatedFields_ = [10,11];
+proto.store.CreateOrderRequest.repeatedFields_ = [11,12];
 
 
 
@@ -6588,12 +6588,13 @@ proto.store.CreateOrderRequest.toObject = function(includeInstance, msg) {
     clientRequest: (f = msg.getClientRequest()) && proto_client_pb.ClientRequest.toObject(includeInstance, f),
     cartId: jspb.Message.getFieldWithDefault(msg, 2, 0),
     cartUuid: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    userId: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    customerId: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    userId: jspb.Message.getFieldWithDefault(msg, 5, 0),
     shippingAddress: (f = msg.getShippingAddress()) && proto.store.AddressRequest.toObject(includeInstance, f),
     billingAddress: (f = msg.getBillingAddress()) && proto.store.AddressRequest.toObject(includeInstance, f),
-    methodCode: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    carrierCode: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    paymentMethodCode: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    methodCode: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    carrierCode: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    paymentMethodCode: jspb.Message.getFieldWithDefault(msg, 10, ""),
     productsList: jspb.Message.toObjectList(msg.getProductsList(),
     proto.store.ProductOrderLine.toObject, includeInstance),
     paymentsList: jspb.Message.toObjectList(msg.getPaymentsList(),
@@ -6649,36 +6650,40 @@ proto.store.CreateOrderRequest.deserializeBinaryFromReader = function(msg, reade
       break;
     case 4:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setUserId(value);
+      msg.setCustomerId(value);
       break;
     case 5:
-      var value = new proto.store.AddressRequest;
-      reader.readMessage(value,proto.store.AddressRequest.deserializeBinaryFromReader);
-      msg.setShippingAddress(value);
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setUserId(value);
       break;
     case 6:
       var value = new proto.store.AddressRequest;
       reader.readMessage(value,proto.store.AddressRequest.deserializeBinaryFromReader);
-      msg.setBillingAddress(value);
+      msg.setShippingAddress(value);
       break;
     case 7:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setMethodCode(value);
+      var value = new proto.store.AddressRequest;
+      reader.readMessage(value,proto.store.AddressRequest.deserializeBinaryFromReader);
+      msg.setBillingAddress(value);
       break;
     case 8:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCarrierCode(value);
+      msg.setMethodCode(value);
       break;
     case 9:
       var value = /** @type {string} */ (reader.readString());
-      msg.setPaymentMethodCode(value);
+      msg.setCarrierCode(value);
       break;
     case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPaymentMethodCode(value);
+      break;
+    case 11:
       var value = new proto.store.ProductOrderLine;
       reader.readMessage(value,proto.store.ProductOrderLine.deserializeBinaryFromReader);
       msg.addProducts(value);
       break;
-    case 11:
+    case 12:
       var value = new proto.store.PaymentRequest;
       reader.readMessage(value,proto.store.PaymentRequest.deserializeBinaryFromReader);
       msg.addPayments(value);
@@ -6734,22 +6739,21 @@ proto.store.CreateOrderRequest.serializeBinaryToWriter = function(message, write
       f
     );
   }
-  f = message.getUserId();
+  f = message.getCustomerId();
   if (f !== 0) {
     writer.writeInt32(
       4,
       f
     );
   }
-  f = message.getShippingAddress();
-  if (f != null) {
-    writer.writeMessage(
+  f = message.getUserId();
+  if (f !== 0) {
+    writer.writeInt32(
       5,
-      f,
-      proto.store.AddressRequest.serializeBinaryToWriter
+      f
     );
   }
-  f = message.getBillingAddress();
+  f = message.getShippingAddress();
   if (f != null) {
     writer.writeMessage(
       6,
@@ -6757,31 +6761,39 @@ proto.store.CreateOrderRequest.serializeBinaryToWriter = function(message, write
       proto.store.AddressRequest.serializeBinaryToWriter
     );
   }
-  f = message.getMethodCode();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getBillingAddress();
+  if (f != null) {
+    writer.writeMessage(
       7,
-      f
+      f,
+      proto.store.AddressRequest.serializeBinaryToWriter
     );
   }
-  f = message.getCarrierCode();
+  f = message.getMethodCode();
   if (f.length > 0) {
     writer.writeString(
       8,
       f
     );
   }
-  f = message.getPaymentMethodCode();
+  f = message.getCarrierCode();
   if (f.length > 0) {
     writer.writeString(
       9,
       f
     );
   }
+  f = message.getPaymentMethodCode();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
+    );
+  }
   f = message.getProductsList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      10,
+      11,
       f,
       proto.store.ProductOrderLine.serializeBinaryToWriter
     );
@@ -6789,7 +6801,7 @@ proto.store.CreateOrderRequest.serializeBinaryToWriter = function(message, write
   f = message.getPaymentsList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      11,
+      12,
       f,
       proto.store.PaymentRequest.serializeBinaryToWriter
     );
@@ -6871,10 +6883,10 @@ proto.store.CreateOrderRequest.prototype.setCartUuid = function(value) {
 
 
 /**
- * optional int32 user_id = 4;
+ * optional int32 customer_id = 4;
  * @return {number}
  */
-proto.store.CreateOrderRequest.prototype.getUserId = function() {
+proto.store.CreateOrderRequest.prototype.getCustomerId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
@@ -6883,18 +6895,36 @@ proto.store.CreateOrderRequest.prototype.getUserId = function() {
  * @param {number} value
  * @return {!proto.store.CreateOrderRequest} returns this
  */
-proto.store.CreateOrderRequest.prototype.setUserId = function(value) {
+proto.store.CreateOrderRequest.prototype.setCustomerId = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * optional AddressRequest shipping_address = 5;
+ * optional int32 user_id = 5;
+ * @return {number}
+ */
+proto.store.CreateOrderRequest.prototype.getUserId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.store.CreateOrderRequest} returns this
+ */
+proto.store.CreateOrderRequest.prototype.setUserId = function(value) {
+  return jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional AddressRequest shipping_address = 6;
  * @return {?proto.store.AddressRequest}
  */
 proto.store.CreateOrderRequest.prototype.getShippingAddress = function() {
   return /** @type{?proto.store.AddressRequest} */ (
-    jspb.Message.getWrapperField(this, proto.store.AddressRequest, 5));
+    jspb.Message.getWrapperField(this, proto.store.AddressRequest, 6));
 };
 
 
@@ -6903,7 +6933,7 @@ proto.store.CreateOrderRequest.prototype.getShippingAddress = function() {
  * @return {!proto.store.CreateOrderRequest} returns this
 */
 proto.store.CreateOrderRequest.prototype.setShippingAddress = function(value) {
-  return jspb.Message.setWrapperField(this, 5, value);
+  return jspb.Message.setWrapperField(this, 6, value);
 };
 
 
@@ -6921,17 +6951,17 @@ proto.store.CreateOrderRequest.prototype.clearShippingAddress = function() {
  * @return {boolean}
  */
 proto.store.CreateOrderRequest.prototype.hasShippingAddress = function() {
-  return jspb.Message.getField(this, 5) != null;
+  return jspb.Message.getField(this, 6) != null;
 };
 
 
 /**
- * optional AddressRequest billing_address = 6;
+ * optional AddressRequest billing_address = 7;
  * @return {?proto.store.AddressRequest}
  */
 proto.store.CreateOrderRequest.prototype.getBillingAddress = function() {
   return /** @type{?proto.store.AddressRequest} */ (
-    jspb.Message.getWrapperField(this, proto.store.AddressRequest, 6));
+    jspb.Message.getWrapperField(this, proto.store.AddressRequest, 7));
 };
 
 
@@ -6940,7 +6970,7 @@ proto.store.CreateOrderRequest.prototype.getBillingAddress = function() {
  * @return {!proto.store.CreateOrderRequest} returns this
 */
 proto.store.CreateOrderRequest.prototype.setBillingAddress = function(value) {
-  return jspb.Message.setWrapperField(this, 6, value);
+  return jspb.Message.setWrapperField(this, 7, value);
 };
 
 
@@ -6958,33 +6988,15 @@ proto.store.CreateOrderRequest.prototype.clearBillingAddress = function() {
  * @return {boolean}
  */
 proto.store.CreateOrderRequest.prototype.hasBillingAddress = function() {
-  return jspb.Message.getField(this, 6) != null;
+  return jspb.Message.getField(this, 7) != null;
 };
 
 
 /**
- * optional string method_code = 7;
+ * optional string method_code = 8;
  * @return {string}
  */
 proto.store.CreateOrderRequest.prototype.getMethodCode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.store.CreateOrderRequest} returns this
- */
-proto.store.CreateOrderRequest.prototype.setMethodCode = function(value) {
-  return jspb.Message.setProto3StringField(this, 7, value);
-};
-
-
-/**
- * optional string carrier_code = 8;
- * @return {string}
- */
-proto.store.CreateOrderRequest.prototype.getCarrierCode = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
 };
 
@@ -6993,16 +7005,16 @@ proto.store.CreateOrderRequest.prototype.getCarrierCode = function() {
  * @param {string} value
  * @return {!proto.store.CreateOrderRequest} returns this
  */
-proto.store.CreateOrderRequest.prototype.setCarrierCode = function(value) {
+proto.store.CreateOrderRequest.prototype.setMethodCode = function(value) {
   return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
 /**
- * optional string payment_method_code = 9;
+ * optional string carrier_code = 9;
  * @return {string}
  */
-proto.store.CreateOrderRequest.prototype.getPaymentMethodCode = function() {
+proto.store.CreateOrderRequest.prototype.getCarrierCode = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
@@ -7011,18 +7023,36 @@ proto.store.CreateOrderRequest.prototype.getPaymentMethodCode = function() {
  * @param {string} value
  * @return {!proto.store.CreateOrderRequest} returns this
  */
-proto.store.CreateOrderRequest.prototype.setPaymentMethodCode = function(value) {
+proto.store.CreateOrderRequest.prototype.setCarrierCode = function(value) {
   return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
 /**
- * repeated ProductOrderLine products = 10;
+ * optional string payment_method_code = 10;
+ * @return {string}
+ */
+proto.store.CreateOrderRequest.prototype.getPaymentMethodCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.store.CreateOrderRequest} returns this
+ */
+proto.store.CreateOrderRequest.prototype.setPaymentMethodCode = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * repeated ProductOrderLine products = 11;
  * @return {!Array<!proto.store.ProductOrderLine>}
  */
 proto.store.CreateOrderRequest.prototype.getProductsList = function() {
   return /** @type{!Array<!proto.store.ProductOrderLine>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.store.ProductOrderLine, 10));
+    jspb.Message.getRepeatedWrapperField(this, proto.store.ProductOrderLine, 11));
 };
 
 
@@ -7031,7 +7061,7 @@ proto.store.CreateOrderRequest.prototype.getProductsList = function() {
  * @return {!proto.store.CreateOrderRequest} returns this
 */
 proto.store.CreateOrderRequest.prototype.setProductsList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 10, value);
+  return jspb.Message.setRepeatedWrapperField(this, 11, value);
 };
 
 
@@ -7041,7 +7071,7 @@ proto.store.CreateOrderRequest.prototype.setProductsList = function(value) {
  * @return {!proto.store.ProductOrderLine}
  */
 proto.store.CreateOrderRequest.prototype.addProducts = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 10, opt_value, proto.store.ProductOrderLine, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 11, opt_value, proto.store.ProductOrderLine, opt_index);
 };
 
 
@@ -7055,12 +7085,12 @@ proto.store.CreateOrderRequest.prototype.clearProductsList = function() {
 
 
 /**
- * repeated PaymentRequest payments = 11;
+ * repeated PaymentRequest payments = 12;
  * @return {!Array<!proto.store.PaymentRequest>}
  */
 proto.store.CreateOrderRequest.prototype.getPaymentsList = function() {
   return /** @type{!Array<!proto.store.PaymentRequest>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.store.PaymentRequest, 11));
+    jspb.Message.getRepeatedWrapperField(this, proto.store.PaymentRequest, 12));
 };
 
 
@@ -7069,7 +7099,7 @@ proto.store.CreateOrderRequest.prototype.getPaymentsList = function() {
  * @return {!proto.store.CreateOrderRequest} returns this
 */
 proto.store.CreateOrderRequest.prototype.setPaymentsList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 11, value);
+  return jspb.Message.setRepeatedWrapperField(this, 12, value);
 };
 
 
@@ -7079,7 +7109,7 @@ proto.store.CreateOrderRequest.prototype.setPaymentsList = function(value) {
  * @return {!proto.store.PaymentRequest}
  */
 proto.store.CreateOrderRequest.prototype.addPayments = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 11, opt_value, proto.store.PaymentRequest, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 12, opt_value, proto.store.PaymentRequest, opt_index);
 };
 
 
