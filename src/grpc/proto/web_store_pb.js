@@ -7155,7 +7155,8 @@ proto.store.ProductOrderLine.prototype.toObject = function(opt_includeInstance) 
 proto.store.ProductOrderLine.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    quantity: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0)
+    quantity: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
+    sku: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -7200,6 +7201,10 @@ proto.store.ProductOrderLine.deserializeBinaryFromReader = function(msg, reader)
       var value = /** @type {number} */ (reader.readDouble());
       msg.setQuantity(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSku(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -7243,6 +7248,13 @@ proto.store.ProductOrderLine.serializeBinaryToWriter = function(message, writer)
       f
     );
   }
+  f = message.getSku();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -7279,6 +7291,24 @@ proto.store.ProductOrderLine.prototype.getQuantity = function() {
  */
 proto.store.ProductOrderLine.prototype.setQuantity = function(value) {
   return jspb.Message.setProto3FloatField(this, 2, value);
+};
+
+
+/**
+ * optional string sku = 3;
+ * @return {string}
+ */
+proto.store.ProductOrderLine.prototype.getSku = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.store.ProductOrderLine} returns this
+ */
+proto.store.ProductOrderLine.prototype.setSku = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

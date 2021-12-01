@@ -615,6 +615,7 @@ class WebStore {
       products.map(product => {
         const productOrderLine = new ProductOrderLine()
         productOrderLine.setId(product.id)
+        productOrderLine.setSku(product.sku)
         productOrderLine.setQuantity(product.quantity)
         request.addProducts(productOrderLine)
       })
