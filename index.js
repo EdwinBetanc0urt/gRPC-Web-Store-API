@@ -308,9 +308,10 @@ class WebStore {
     token,
     cartId,
     sku,
-    quantity
+    quantity,
+    configurableOptions
   }, callback) {
-    const { UpdateCartRequest } = require('./src/grpc/proto/web_store_pb.js')
+    const { UpdateCartRequest, ConfigurableItemOption } = require('./src/grpc/proto/web_store_pb.js')
     const request = new UpdateCartRequest()
     if (token) {
       request.setClientRequest(this.createClientRequest(token))
@@ -320,6 +321,14 @@ class WebStore {
       request.setClientRequest(this.getClientContext())
       request.setIsGuest(true)
       request.setCartUuid(cartId)
+    }
+    if(configurableOptions) {
+      configurableOptions.forEach(option => {
+        const configurableItemOption = new ConfigurableItemOption()
+        configurableItemOption.setId(option.id)
+        configurableItemOption.setValue(option.value)
+        request.addConfigurableItemOptions(configurableItemOption)
+      })
     }
     request.setSku(sku)
     request.setQuantity(quantity)
@@ -521,7 +530,7 @@ class WebStore {
     paymentAdditionalMethod,
     products
   }, callback) {
-    const { CreateOrderRequest, AddressRequest, PaymentRequest, ProductOrderLine } = require('./src/grpc/proto/web_store_pb.js')
+    const { CreateOrderRequest, ConfigurableItemOption, AddressRequest, PaymentRequest, ProductOrderLine } = require('./src/grpc/proto/web_store_pb.js')
     const request = new CreateOrderRequest()
     if (token) {
       request.setClientRequest(this.createClientRequest(token))
@@ -617,6 +626,14 @@ class WebStore {
         productOrderLine.setId(product.id)
         productOrderLine.setSku(product.sku)
         productOrderLine.setQuantity(product.quantity)
+        if(product.configurableOptions) {
+          product.configurableOptions.forEach(option => {
+            const configurableItemOption = new ConfigurableItemOption()
+            configurableItemOption.setId(option.id)
+            configurableItemOption.setValue(option.value)
+            productOrderLine.addConfigurableItemOptions(configurableItemOption)
+          })
+        }
         request.addProducts(productOrderLine)
       })
     }
