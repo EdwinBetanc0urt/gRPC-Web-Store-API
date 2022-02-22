@@ -2189,7 +2189,8 @@ proto.access.UserInfo.toObject = function(includeInstance, msg) {
     name: jspb.Message.getFieldWithDefault(msg, 3, ""),
     description: jspb.Message.getFieldWithDefault(msg, 4, ""),
     comments: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    image: jspb.Message.getFieldWithDefault(msg, 6, "")
+    image: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    connectionTimeout: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
 
   if (includeInstance) {
@@ -2249,6 +2250,10 @@ proto.access.UserInfo.deserializeBinaryFromReader = function(msg, reader) {
     case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setImage(value);
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setConnectionTimeout(value);
       break;
     default:
       reader.skipField();
@@ -2318,6 +2323,13 @@ proto.access.UserInfo.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       6,
+      f
+    );
+  }
+  f = message.getConnectionTimeout();
+  if (f !== 0) {
+    writer.writeInt64(
+      7,
       f
     );
   }
@@ -2429,6 +2441,24 @@ proto.access.UserInfo.prototype.getImage = function() {
  */
 proto.access.UserInfo.prototype.setImage = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional int64 connection_timeout = 7;
+ * @return {number}
+ */
+proto.access.UserInfo.prototype.getConnectionTimeout = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.access.UserInfo} returns this
+ */
+proto.access.UserInfo.prototype.setConnectionTimeout = function(value) {
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
