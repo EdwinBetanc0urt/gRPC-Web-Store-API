@@ -546,6 +546,7 @@ class WebStore {
     request.setCustomerId(customerId)
     //  Commons
     const shippingAddressToSet = new AddressRequest()
+    shippingAddressToSet.setLocationId(shippingAddress.id)
     shippingAddressToSet.setFirstName(shippingAddress.firstName)
     shippingAddressToSet.setLastName(shippingAddress.lastName)
     shippingAddressToSet.setCountryCode(shippingAddress.countryCode)
@@ -560,6 +561,7 @@ class WebStore {
     request.setShippingAddress(shippingAddressToSet)
     //  Set Billing Address
     const billingAddressToSet = new AddressRequest()
+    billingAddressToSet.setLocationId(billingAddress.id)
     billingAddressToSet.setFirstName(billingAddress.firstName)
     billingAddressToSet.setLastName(billingAddress.lastName)
     billingAddressToSet.setCountryCode(billingAddress.countryCode)
